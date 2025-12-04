@@ -1,0 +1,25 @@
+.navigation_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    padding-inline: 1rem;
+    background-color: #FFF;
+}
+
+.nav_links {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: fit-content;
+}
+
+.nav_logo {
+    color: #141414;
+}
+
+.link {
+    display: flex;
+    width: 100%;
+    padding-inline: 1rem;
+}
