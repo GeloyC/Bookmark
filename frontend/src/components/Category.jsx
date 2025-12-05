@@ -1,28 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const category = () => {
+const category = ({categories}) => {
 
     const base_url = `http://localhost:5000`;
     const user_id = JSON.parse(localStorage.getItem('user'));
 
-    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState([]);
 
-    useEffect(() => {
-        const fetchCategory = async () => {
-            const response = await axios.get(`${base_url}/category/${user_id?.id}`);
-            setCategories(response.data);
+    // useEffect(() => {
+    //     const fetchCategory = async () => {
+    //         const response = await axios.get(`${base_url}/category/${user_id?.id}`);
+    //         setCategories(response.data);
 
-            console.log(response.data)
-        }
+    //         console.log(response.data)
+    //     }
 
-        fetchCategory();
-    }, []);
+    //     fetchCategory();
+    // }, []);
 
     return (
         <div>
             {categories.length > 0 && (
-                <select name="" id="link_category" className='text-[#141414] bg-[#FFF] w-[300px] px-3 py-1 rounded-[5px] cursor-pointer'>
+                <select name="" id="link_category"  
+                className='text-[#141414] bg-[#FFF] w-[300px] px-3 py-1 rounded-[5px] cursor-pointer'>
                     {/* Add selection of category here */}
                     <option hidden>Select category</option>
                     {/* <option value="category_1">Category 1</option>

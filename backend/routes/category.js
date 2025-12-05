@@ -20,7 +20,7 @@ cat.post('/', async (req, res) => {
                 category: category_name
             })
 
-            window.location.reload();
+            // window.location.reload();
         } else {
             const [row] = await db.query(`
                 INSERT INTO category (user_id, category_name) VALUES (?, ?)`,
