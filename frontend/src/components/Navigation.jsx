@@ -45,7 +45,7 @@ const Navigation = () => {
     <div className='flex flex-row justify-between items-center px-[20px] border-box border-b-[#656565] border-b'>
         <Link to="/" className=''>
             {/* LOGO HERE */}
-            BOOKMARK NI ANGELO
+            BOOKMARK BY ANGELO
         </Link>
         <div className='flex flex-row items-center'>
             <div className='flex items-center border-r border-r-[#3A3A3A]'>
