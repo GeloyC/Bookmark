@@ -15,6 +15,7 @@ function App() {
   const [createCategory, setCreateCategory] = useState(false);
   const [categories, setCategories] = useState([]);
   const [categoryName, setCategoryName] = useState('');
+  const [sucessMessage, setSucessMessage] = useState('');
 
   const [error, setError] = useState('');
   const [inompleteError, setIncompleteError] = useState('');
@@ -37,6 +38,11 @@ function App() {
   // Closes and opens category creation section
   const handleCreateCategory = () => {
     setCreateCategory((cat) => !cat)
+
+    // reset the input when canceling the process
+    setCategoryName('');
+    setError('');
+    setSucessMessage('');
   };
 
 
@@ -55,11 +61,16 @@ function App() {
       if (response.data.Error != null) {
         setError(response.data.Error);
       }
+
+      
       
       console.log('New created category: ', response.data);
       console.log('Input category: ', categoryName);
 
       fetchCategory();
+      setSucessMessage(response.data.message);
+      setCategoryName('');
+
     } catch(err) {
       console.error('Error creating new category: ', err);
     }
@@ -144,9 +155,6 @@ function App() {
   const linkFilter = links.filter((link) => {
     const isTitleMatch = link.title?.toLowerCase().includes(searchFilter.toLowerCase());
     const isCategoryMatch = categoryFilter === "all" || link.category === categoryFilter;
-
-    console.log('Title: ', isTitleMatch);
-    console.log('Category: ', isCategoryMatch)
 
     return isTitleMatch && isCategoryMatch;
   });
@@ -248,6 +256,14 @@ function App() {
                   <button onClick={handleCreateCategory} className='px-4 py-2 border border-[#FFF] rounded-[10px] text-[#FFF] cursor-pointer hover:bg-[#2A2A2A] active:bg-[#3A3A3A]'>Cancel</button>
                 </div>
               </div>
+
+              {sucessMessage && (
+                <label className='flex w-full items-center justify-center p-3 text-[#FFF600]'>{sucessMessage}</label>
+              )}
+
+              {error && (
+                <label className='flex w-full items-center justify-center p-3 text-[#FF0000]'>{error}</label>
+              )}
             </form>
           )}
 

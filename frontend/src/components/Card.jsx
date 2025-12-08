@@ -44,7 +44,7 @@ const Card = ({links, fetchLink, fetchCategory}) => {
           > Date created
           > Dropdown to show the: description
         */}
-        {links? (
+        {links ? (
           links.map((link, index) => (
             <div key={link.card_id} className={`py-2 px-4 ${isOpenLink === link.card_id ? 'pb-4 bg-[#464646]' : 'bg-[#2A2A2A]'} rounded-[10px] hover:bg-[#464646]`}>
               <div key={link.card_id} className='flex flex-row w-full justify-between'>
@@ -75,7 +75,7 @@ const Card = ({links, fetchLink, fetchCategory}) => {
               {isOpenLink === link.card_id && (
                 <div className='flex flex-col gap-1 w-full'>
                   <label htmlFor="link_description" className='text-[#656565] text-[14px]'>Description</label>
-                  <textarea rows={2} value={link.description || linkDesc} onChange={(e) => setLinkDesc(e.target.value)} id="link_description"
+                  <textarea rows={2} value={link.description} onChange={(e) => setLinkDesc(e.target.value)} id="link_description"
                     className='text-[14px] text-[#b5b7b1]'></textarea>
   
                   <div className='flex w-full justify-end'>
