@@ -3,7 +3,7 @@ import db from '../config/db.js';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
 
-const card = express();
+const card = express(); 
 card.use(express.json());
 
 card.post('/', async (req, res) => {
@@ -56,7 +56,7 @@ card.get('/:card_holder_id/list', async (req, res) => {
     try {
         const [row] = await db.query(`
             SELECT 
-                card_id, category, title, link, description, 
+                id, category, title, link, description, 
                 DATE_FORMAT(date_created, '%Y-%m-%d') AS date_created
             FROM card
             WHERE card_holder_id = ?;
@@ -85,13 +85,13 @@ card.get('/:card_holder_id/list', async (req, res) => {
 });
 
 
-card.delete('/:card_id', async (req, res) => {
-    const { card_id } = req.params;
+card.delete('/:id', async (req, res) => {
+    const { id } = req.params;
 
     try {
         const [row] = await db.query(`
-            DELETE FROM card WHERE card_id = ?;
-            `, [card_id]);
+            DELETE FROM card WHERE id = ?;
+            `, [id]);
 
         res.json({
             sucess:true,

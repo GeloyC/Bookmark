@@ -8,7 +8,7 @@ user.use(express.json());
 user.get('/', async (req, res) => {
     const [response] = await db.query(`
         SELECT * FROM user;    
-    `);
+    `); 
 
     res.json(response);
 });

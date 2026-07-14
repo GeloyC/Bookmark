@@ -1,17 +1,32 @@
-import mysql from 'mysql2/promise'
+import pgPromise from 'pg-promise';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-let db;
+const pgp = new pgPromise();
 
-db = mysql.createPool({
+const dbConfig = {
+    user: process.env.DB_USERNAME,
+    password: String(process.env.DB_PASSWORD),
     host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    port: Number(process.env.DB_PORT),
     database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-})
+};
 
+const db = pgp(dbConfig);
+
+
+export async function testConnection () {
+    try {
+        const connect = await db.connect();
+        connect.done();
+
+        console.log("Successfully connected to POSTGRES with version: ", connect.client.serverVersion);
+
+        return connect.client.serverVersion;
+    } catch (err) {
+        console.error('Failed to establish database connection: ', err)
+    }
+}
 
 export default db;

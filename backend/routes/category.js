@@ -2,8 +2,6 @@ import express from 'express';
 import db from '../config/db.js';
 
 
-
-
 const cat = express();
 cat.use(express.json());
 
@@ -14,7 +12,7 @@ cat.post('/', async (req, res) => {
     try {   
         const [rows] = await db.query("SELECT * FROM category WHERE category_name = ?", [category_name]);
 
-        if (rows.length > 0) {
+        if (!rows) {
             res.json({
                 Error: 'Category already exist, please add a different category.',
                 category: category_name

@@ -1,0 +1,3 @@
+Green: #A8DF8E
+Black Background: #141414
+Block Element Background: #191919

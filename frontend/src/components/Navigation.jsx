@@ -1,62 +1,28 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import axios from 'axios';
 
 // import '../styling/Navigation.css'
 
 const Navigation = () => {
-  const base_url = `http://localhost:5000`;
+
+  const location = useLocation();
 
   const [user, setUser] = useState([]);
-  const [showExit, setShowExit] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-
-    const fetchUser = async () => {
-        const user_id = JSON.parse(localStorage.getItem('user'));
-        console.log('id: ', user_id?.id)
-
-        try {
-            const response = await axios.get(`${base_url}/user/${user_id?.id}`)
-            setUser(response.data.username)
-
-            console.log('Current user: ', response.data.username)
-        } catch (err) {
-            console.error('Failed to fetch user: ', err)
-        }       
-    };
-
-    fetchUser();
-  }, []);
-
-
-  const displayExitButton = () => {
-    setShowExit(prev => !prev);
-  }
-
-  const ExitUser = () => {
-    localStorage.removeItem('user');
-    window.location.reload();
-    navigate('/');
-  }
 
   return (
-    <div className='flex flex-row justify-between items-center px-[20px] border-box border-b-[#656565] border-b'>
-        <Link to="/" className=''>
+    <div className='flex flex-row justify-between items-center h-auto border-[#656565]/50 border rounded-[15px] bg-[#191919] overflow-hidden box-border'>
+        <Link to="/" className='px-[1rem]'>
             {/* LOGO HERE */}
-            BOOKMARK BY ANGELO
+            <span className='text-[#A8DF8E] text-[20px] font-bold'>BOOKMARK</span>
         </Link>
-        <div className='flex flex-row items-center'>
-            <div className='flex items-center border-r border-r-[#3A3A3A]'>
-              <Link to="/" className='flex items-center hover:bg-[#2A2A2A] h-full w-full p-4'>Home</Link>
-              <Link to="/help" className='flex items-center hover:bg-[#2A2A2A] h-full p-4'>Help</Link>
-            </div>
+        <div className='flex flex-row items-center h-full'>
+            <Link to="/" className={`flex items-center hover:bg-[#A8DF8E]/15 h-full w-full p-4 text-[#FAFAFA] ${location.pathname === '/' ? 'border-b-2 border-b-[#A8DF8E] bg-[#A8DF8E]/25' : 'border-r border-r-[#3A3A3A]'}`}>Home</Link>
 
-            {!user ? (
+            {user ? (
               <div className='flex items-center'>
-                <Link to="/login" className='flex items-center font-bold h-full w-full hover:bg-[#2A2A2A] p-4'>Login</Link>
-                <Link className='flex items-center bg-[#FFF] text-[#141414] font-bold h-full w-full hover:bg-[#656565] p-4'>Join</Link>
+                <Link to="/login" className={`flex items-center font-bold h-full w-full hover:bg-[#A8DF8E]/15 p-4 text-[#FAFAFA]`}>Login</Link>
+                <Link className='flex items-center bg-[#191919] text-[#141414] font-bold h-full w-full border-l-[#FAFAFA]/25 border-l p-4 text-[#FAFAFA] whitespace-nowrap hover:bg-[#A8DF8E]/15'>Create Account</Link>
               </div>
 
             ) : (

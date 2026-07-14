@@ -7,6 +7,8 @@ import user from './routes/user.js';
 import card from './routes/card.js';
 import cat from './routes/category.js';
 
+import { testConnection } from './config/db.js';
+
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -26,4 +28,5 @@ const PORT = 5000;
 
 app.listen(PORT, () => {
     console.log(`Server is running is http://localhost:${PORT}`);
+    testConnection();
 });
