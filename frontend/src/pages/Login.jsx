@@ -31,8 +31,7 @@ const Login = () => {
 
 
     return (
-        <div className='flex flex-col w-full h-screen border-box'>
-            <Navigation />
+        <div className='flex flex-col items-center justify-center w-full h-full p-[1rem] rounded-[15px]'>
             
             <div className='flex flex-col items-center justify-center w-full h-full'>
                 <form onSubmit={handleLogin} className='flex flex-col items-center justify-center gap-4 p-4 w-[500px]'>

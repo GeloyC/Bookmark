@@ -1,11 +1,15 @@
+
+import session from 'express-session';
 import pgPromise from 'pg-promise';
+
 import dotenv from 'dotenv';
+
 
 dotenv.config();
 
 const pgp = new pgPromise();
 
-const dbConfig = {
+export const dbConfig = {
     user: process.env.DB_USERNAME,
     password: String(process.env.DB_PASSWORD),
     host: process.env.DB_HOST,
@@ -14,6 +18,7 @@ const dbConfig = {
 };
 
 const db = pgp(dbConfig);
+
 
 
 export async function testConnection () {

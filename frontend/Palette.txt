@@ -1,3 +1,6 @@
-Green: #A8DF8E
+Green: #8cd56a
+Green Hovered: #71cb47
+
+
 Black Background: #141414
 Block Element Background: #191919
