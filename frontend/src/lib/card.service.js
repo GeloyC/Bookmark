@@ -5,6 +5,7 @@ import axios from "axios";
 export const createNewLink = async (
     card_holder_id,
     group_name,
+    group_id,
     link
 ) => {
     try {
@@ -13,6 +14,7 @@ export const createNewLink = async (
             {
                 card_holder_id: card_holder_id,
                 group_name: group_name,
+                group_id: group_id,
                 link: link
             },
             { withCredentials: true }

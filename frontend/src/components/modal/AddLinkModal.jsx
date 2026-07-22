@@ -12,9 +12,9 @@ import { createNewLink, updateLinkById } from '../../lib/card.service';
 
 export const AddLinkModal = ({
     setCloseModal,
-    groups,
     user,
-    selectedGroup
+    selectedGroup,
+    groupId
 }) => {
 
     const [groupSelectionOpen, setGroupSelectionOpen] = useState(false);
@@ -34,6 +34,7 @@ export const AddLinkModal = ({
         mutationFn: async({ 
             card_holder_id,
             group_name,
+            group_id,
             link
         }) => {
             setLoading(true);
@@ -41,6 +42,7 @@ export const AddLinkModal = ({
                 const response = await createNewLink(
                     card_holder_id,
                     group_name,
+                    group_id,
                     link
                 );
 
@@ -133,6 +135,7 @@ export const AddLinkModal = ({
                         onClick={() => handleCreateNewLink.mutate({
                             card_holder_id: user.id,
                             group_name: selectedGroup,
+                            group_id: groupId,
                             link: newLink
                         })} 
                         className='w-full text-center p-3 rounded-[15px] bg-[#8cd56a] hover:bg-[#71cb47] active:bg-[#8cd56a] cursor-pointer'>

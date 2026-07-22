@@ -66,3 +66,33 @@ export const allGroups = async (req, res, next) => {
         next(err);
     }
 }
+
+
+export const deleteSelectedGroup = async (req, res, next) => {
+    try {   
+        const id = req.params.id;
+
+        if (!id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Id not found'
+            })
+        };
+
+        const deletedGroup = await db.one(
+            `DELETE FROM groups 
+            WHERE id = $1
+            RETURNING name`,
+            [ id ]
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: 'Group deleted successfully',
+            data: deletedGroup.name 
+        });
+
+    } catch (err) {
+        next(err);
+    }
+}

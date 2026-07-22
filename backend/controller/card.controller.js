@@ -7,6 +7,7 @@ export const createLink = async (req, res, next) => {
         const {  
             card_holder_id,
             group_name,
+            group_id,
             link
         } = req.body;
 
@@ -32,17 +33,20 @@ export const createLink = async (req, res, next) => {
                 (
                     card_holder_id,
                     group_name,
+                    group_id,
                     title,
                     link
                 ) VALUES (
                     $1,
                     $2,
                     $3,
-                    $4
+                    $4,
+                    $5
                 ) RETURNING *`,
                 [
                     card_holder_id,
                     group_name,
+                    group_id,
                     title,
                     link
                 ]
@@ -123,6 +127,7 @@ export const deleteCard = async (req, res, next) => {
                 message: 'Id not found'
             }); 
         }
+
 
         const deleted = await db.one(
             `DELETE FROM cards 

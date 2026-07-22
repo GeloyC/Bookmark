@@ -31,3 +31,17 @@ export const createGroup = async (group_holder_id, name) => {
         throw err;
     }
 }
+
+
+export const deleteGroupByID = async (id) => {
+    try {
+        const response = await axios.delete(
+            `${BASE_URL}/group/v1/${id}`,
+            { withCredentials: true }
+        );
+
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}

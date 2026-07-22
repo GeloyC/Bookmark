@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // icons
 import Folder from '/src/assets/Icons/folder.svg?react';
@@ -6,7 +7,7 @@ import Close from '/src/assets/Icons/close.svg?react';
 import Edit from '/src/assets/Icons/edit.svg?react';
 
 // service
-import { getGroupsById } from '../../lib/group.service';
+import { deleteGroupByID, getGroupsById } from '../../lib/group.service';
 import { Group } from './Group/Group';
 
 export const GroupWrapper = ({
@@ -14,14 +15,36 @@ export const GroupWrapper = ({
     groups, // passed from /Home.jsx,
     selectedGroup,
     setSelectedGroup, // passed this setState from /Home.jsx
-    setGroupModalOpen
+    setSelectedGroupId,
+    setGroupModalOpen,
+    handleOpenGroupEditModal
 }) => {
 
-    const [currentId, setCurrentId] = useState(null);
+    const queryClient = useQueryClient();
+    const handleDeleteGroup = useMutation({
+        mutationFn: async (id) => {
+            const res = await deleteGroupByID(id);
+            return res;
+        },
+        onSuccess: (res) => {
+            console.log('Group deleted: ', res.data);
+            queryClient.invalidateQueries({
+                queryKey: ['groups']
+            })
 
-    const handleShowDropdown = (id) => {
-        setCurrentId(prev => prev === id ? null : id);
-    }
+            queryClient.invalidateQueries({
+                queryKey: ['cards']
+            })
+        }
+    });
+
+
+    const handleSelectGroupId = (id) => {
+        setSelectedGroupId(prev => prev === id ? null : id);
+        console.log('Selected group id: ', id);
+    }   
+
+
 
     return (
         <div className='flex flex-col items-start gap-1 w-full h-full rounded-t-[10px] '>
@@ -40,8 +63,9 @@ export const GroupWrapper = ({
                         group={group}
                         selectedGroup={selectedGroup}
                         setSelectedGroup={setSelectedGroup}
-                        handleShowDropdown={() => handleShowDropdown(group.id)}
-                        currentId={currentId}
+                        handleSelectGroupId={handleSelectGroupId}
+                        handleDeleteGroup={() => handleDeleteGroup.mutate(group.id)}
+                        handleOpenGroupEditModal={handleOpenGroupEditModal}
                     />
                 ))}
             </div>

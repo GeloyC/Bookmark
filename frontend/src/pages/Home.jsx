@@ -21,6 +21,7 @@ import { useUserContext } from '../context/userContext';
 // services
 import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
+import { GroupEditModal } from '../components/modal/GroupEditModal';
 
 const Home = () => {
 
@@ -28,7 +29,10 @@ const Home = () => {
     const [groupModalOpen, setGroupModalOpen] = useState(false);
     const [addLinkModalOpen, setAddLinkModalOpen] = useState(false);
 
+
     const [selectedGroup, setSelectedGroup] = useState(null);
+    const [selectedGroupId, setSelectedGroupId] = useState(null);
+    const [selectedGroupEditModal, setSelectedGroupEditModal] = useState(null);
 
     const { data: groups = [], error, isLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
@@ -43,6 +47,11 @@ const Home = () => {
         ),
         enabled: !!selectedGroup
     });
+
+    const handleOpenGroupEditModal = (id) => {
+        console.log('id from home.jsx: ', id);
+        setSelectedGroupEditModal(prev => prev === id ? null : id)
+    };
     
 
     return (
@@ -57,6 +66,8 @@ const Home = () => {
                         selectedGroup={selectedGroup}
                         setSelectedGroup={setSelectedGroup}
                         setGroupModalOpen={setGroupModalOpen}
+                        setSelectedGroupId={setSelectedGroupId}
+                        handleOpenGroupEditModal={handleOpenGroupEditModal}
                     />
 
                 </div>
@@ -71,7 +82,7 @@ const Home = () => {
                             </button>
                         </div>
                     ) : groups.length > 0 && selectedGroup === null ? (
-                        <div className='flex flex-col items-center justify-start w-full h-full gap-[0.5rem] bg-[#191919] p-[1rem] rounded-[10px] border border-dashed border-[#FAFAFA]/15'>
+                        <div className='flex flex-col items-center justify-center w-full min-h-[700px]'>
                             <span className='text-[#FAFAFA]'>Select ka muna tols</span>    
                         </div>
                     ) : (
@@ -102,9 +113,19 @@ const Home = () => {
                     <AddLinkModal
                         // add a close function here to close the modal
                         setCloseModal={setAddLinkModalOpen}
-                        groups={groups}
                         user={user}
                         selectedGroup={selectedGroup}
+                        groupId={selectedGroupId}
+                    />
+                </div>
+            )}
+
+            {selectedGroupEditModal && (
+                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+                    <GroupEditModal
+                        // add a close function here to close the modal
+                        groupId={selectedGroupId}
+                        setSelectedGroupEditModal={setSelectedGroupEditModal}
                     />
                 </div>
             )}
