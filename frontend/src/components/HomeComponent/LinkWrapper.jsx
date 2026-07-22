@@ -19,14 +19,16 @@ export const LinkWrapper = ({
 
 
     return (
-        <div className='flex flex-col items-center justify-start w-full gap-[0.5rem]'>
-            <div className='flex items-center justify-between w-full'>
-                <span className='text-[#FAFAFA] opacity-50'>Showing {cards.length} results</span>
+        <div className='flex flex-col items-center justify-start w-full h-full gap-[0.5rem] bg-[#191919] p-[1rem] rounded-[10px]'>
+            {cards.length > 0 && (
+                <div className='flex items-center justify-between w-full'>
+                    <span className='text-[#FAFAFA] opacity-50 leading-none'>Showing {cards.length} results</span>
 
-                <button onClick={() => setOpenAddLinkModal(true)} title='Add Link' className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#191919] active:bg-[#252525] h-[40px] px-2 border-1 border-dashed border-[#FAFAFA]/50 rounded-full cursor-pointer'>
-                    <Add className="w-[25px] h-[25px] opacity-75"/>
-                </button>
-            </div>
+                        <button onClick={() => setOpenAddLinkModal(true)}  title='Add Link' type='button' className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#191919] active:bg-[#252525] h-[40px] px-2 border-1 border-dashed border-[#FAFAFA]/50 rounded-full cursor-pointer'>
+                            <Add className="w-[25px] h-[25px] opacity-75"/>
+                        </button>
+                </div>
+            )}
 
             <div className='flex flex-col items-start w-full h-[650px] overflow-y-auto thin-scrollbar gap-2'>
                 {cards.length > 0 ? (

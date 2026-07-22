@@ -58,6 +58,9 @@ export const AddLinkModal = ({
             }
         },
         onSuccess: (data) => {
+            queryClient.invalidateQueries({
+                queryKey: ['cards']
+            });
             setNewLink('');
         }
     });
@@ -68,8 +71,6 @@ export const AddLinkModal = ({
             id,
             title
         }) => {
-
-            
             setLoading(true);
             try {
                 if (title === initialTitle) {
@@ -88,10 +89,15 @@ export const AddLinkModal = ({
             }
         },
         onSuccess: () => {
+            queryClient.invalidateQueries({
+                queryKey: ['cards']
+            });
             setCloseModal(false);
         }
     });
 
+    
+    
 
 
     return (

@@ -67,3 +67,18 @@ export const getLinksPerGroup = async ( group_name ) => {
 };
 
 
+export const deleteSelectedCard = async ( id ) => {
+    try {
+        console.log('Received id from frontend: ', id);
+
+        const response = await axios.delete(
+            `${BASE_URL}/card/v1/${id}`,
+            { withCredentials: true }
+        );
+
+        return response.data;
+
+    } catch (err) {
+        throw err;
+    }
+}

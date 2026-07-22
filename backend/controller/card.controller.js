@@ -64,14 +64,12 @@ export const updateLinkById = async (req, res, next) => {
         const { title }  = req.body;
         const id = req.params.id;
 
-        // if (!title || null) {
-        //     return res.status(404).json({
-        //         success: false,
-        //         message: 'Title is required'
-        //     });
-        // }
-
-        console.log('Received title: ', title);
+        if (!title || null || title == "") {
+            return res.status(404).json({
+                success: false,
+                message: 'Title is required'
+            });
+        }
 
         const updatedTitle = await db.one(
             `UPDATE cards
@@ -99,13 +97,44 @@ export const getCardsByGroup = async (req, res, next) => {
 
         const allCard = await db.manyOrNone(
             `SELECT * FROM cards
-            WHERE group_name = $1`,
+            WHERE group_name = $1
+            ORDER BY date_created DESC`,
             [ group_name ]
         );
 
         return res.status(200).json({
             success: true,
             data: allCard
+        });
+
+    } catch (err) {
+        next(err);
+    }
+}
+
+
+export const deleteCard = async (req, res, next) => {
+    try {
+        const id = String(req.params.id);
+
+        if (!id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Id not found'
+            }); 
+        }
+
+        const deleted = await db.one(
+            `DELETE FROM cards 
+            WHERE id = $1
+            RETURNING title`,
+            [ id ]
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: `Link (${deleted.title}) deleted successfully`,
+            data: deleted
         });
 
     } catch (err) {
