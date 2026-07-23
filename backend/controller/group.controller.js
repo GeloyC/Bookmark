@@ -96,3 +96,35 @@ export const deleteSelectedGroup = async (req, res, next) => {
         next(err);
     }
 }
+
+
+
+export const editGroupName = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const { name } = req.body;
+
+        if (!id) {
+            return res.status(404).json({
+                success: false,
+                message: 'ID not found'
+            });
+        }
+
+        const group = await db.one(
+            `UPDATE groups
+            SET name = $1
+            WHERE id = $2
+            RETURNING name`,
+            [ name, id ]
+        );
+
+        return res.status(200).json({
+            success: true,
+            data: group.name
+        });
+
+    } catch (err) {
+        next(err);
+    }
+} 

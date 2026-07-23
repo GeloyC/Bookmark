@@ -15,6 +15,7 @@ export const getGroupsById = async (group_holder_id) => {
 }
 
 
+
 export const createGroup = async (group_holder_id, name) => {
     try {
         const response = await axios.post(
@@ -37,6 +38,20 @@ export const deleteGroupByID = async (id) => {
     try {
         const response = await axios.delete(
             `${BASE_URL}/group/v1/${id}`,
+            { withCredentials: true }
+        );
+
+        return response.data;
+    } catch (err) {
+        throw err;
+    }
+}
+
+export const editGroupName = async (id, name) => {
+    try {
+        const response = await axios.patch(
+            `${BASE_URL}/group/v1/${id}/name`, 
+            { name: name },
             { withCredentials: true }
         );
 

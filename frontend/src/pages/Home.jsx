@@ -39,6 +39,8 @@ const Home = () => {
         queryFn: () => getGroupsById(user.id)
     });
 
+    const selectedGroupToEdit = groups.find(g => { return g.id === selectedGroupEditModal });
+
 
     const { data: cards = [] } = useQuery({
         queryKey: ['cards', selectedGroup],
@@ -49,9 +51,10 @@ const Home = () => {
     });
 
     const handleOpenGroupEditModal = (id) => {
-        console.log('id from home.jsx: ', id);
         setSelectedGroupEditModal(prev => prev === id ? null : id)
     };
+
+
     
 
     return (
@@ -120,11 +123,12 @@ const Home = () => {
                 </div>
             )}
 
-            {selectedGroupEditModal && (
+            {selectedGroupEditModal &&  (
                 <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
                     <GroupEditModal
                         // add a close function here to close the modal
-                        groupId={selectedGroupId}
+                        groupId={selectedGroupToEdit?.id}
+                        groupName={selectedGroupToEdit?.name}
                         setSelectedGroupEditModal={setSelectedGroupEditModal}
                     />
                 </div>
