@@ -7,7 +7,7 @@ import Close from '/src/assets/Icons/close.svg?react';
 import ArrowDown from '/src/assets/Icons/arrow-down.svg?react';
 
 // service
-import { createNewLink, updateLinkById } from '../../lib/card.service';
+import { createNewLink, updateLinkTitle } from '../../lib/card.service.js';
 
 
 export const AddLinkModal = ({
@@ -41,7 +41,6 @@ export const AddLinkModal = ({
             try {
                 const response = await createNewLink(
                     card_holder_id,
-                    group_name,
                     group_id,
                     link
                 );
@@ -81,7 +80,7 @@ export const AddLinkModal = ({
                 }
                 
                 console.log('New title: ', title);
-                const updatedTitle = await updateLinkById(
+                const updatedTitle = await updateLinkTitle(
                     id,
                     title
                 );

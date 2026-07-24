@@ -14,7 +14,8 @@ import Folder from '/src/assets/Icons/folder.svg?react';
 export const LinkWrapper = ({
     setOpenAddLinkModal,
     cards,
-    selectedGroup
+    selectedGroup,
+    handleOpenCardEditModal
 }) => {
 
 
@@ -33,7 +34,10 @@ export const LinkWrapper = ({
             <div className='flex flex-col items-start w-full h-[650px] overflow-y-auto thin-scrollbar gap-2'>
                 {cards.length > 0 ? (
                     cards.map(card => (
-                        <Card key={card.id} card={card}/>
+                        <Card key={card.id} 
+                            card={card}
+                            handleOpenCardEditModal={handleOpenCardEditModal}
+                        />
                     ))
                 ) : (
                     <div className='flex flex-col items-center justify-center w-full h-full gap-[1rem]'>

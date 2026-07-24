@@ -7,13 +7,16 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Delete from '/src/assets/Icons/delete.svg?react';
 import Copy from '/src/assets/Icons/copy.svg?react';
 import Check from '/src/assets/Icons/check.svg?react'
+import Edit from '/src/assets/Icons/edit.svg?react'
 
 // service
 import { deleteSelectedCard } from '../../../lib/card.service.js';
 
-export const Card = ({ card }) => {
+export const Card = ({ 
+    card,
+    handleOpenCardEditModal
+}) => {
 
-    console.log('Card details: ', card.id);
 
     const queryClient = useQueryClient();
     const handleDeleteLink = useMutation({
@@ -47,6 +50,10 @@ export const Card = ({ card }) => {
             </Link>
 
             <div className='flex items-center gap-[0.5rem] opacity-0 group-hover:opacity-100 transition-all duration-100 px-2'>
+                <button onClick={()=>handleOpenCardEditModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                        <Edit className="w-[23px] h-[23px]" />
+                </button>
+
                 {isCopied === card.id ? (
                     <button className='opacity-50 transition-all duration-100'>
                             <Check className="w-[23px] h-[23px]" />
@@ -56,6 +63,7 @@ export const Card = ({ card }) => {
                             <Copy className="w-[25px] h-[25px]" />
                     </button>
                 )}
+
                 <button onClick={() => handleDeleteLink.mutate({id: card.id})} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                     <Delete className="w-[25px] h-[25px]" />
                 </button>

@@ -15,7 +15,6 @@ export const GroupEditModal = ({
 }) => {
 
     const [name, setName] = useState(groupName);
-    console.log(name);
 
     const handleKeyDown = (e) => {
         if (e.key === "Escape") {
@@ -46,18 +45,18 @@ export const GroupEditModal = ({
 
 
     return (
-        <div tabIndex={-1} onKeyDown={handleKeyDown} className="flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
+        <div tabIndex={-1} onKeyDown={handleKeyDown} className="flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1.5rem]">
 
             <div className="flex items-center justify-between w-full">
-                <span className="text-[22px] text-[#FAFAFA] font-bold">Edit</span>
+                <span className="text-[24px] text-[#FAFAFA] font-bold">Do you want to rename '{groupName}' ?</span>
 
                 <button onClick={()=>setSelectedGroupEditModal(null)} className="cursor-pointer rounded-full p-1 hover:bg-[#252525] active:bg-transparent">
                     <Close className="w-[20px] h-[20px]" />
                 </button>
             </div>
 
-            <div className="flex flex-col w-full gap-[1rem]">
-                <span className="text-[#FAFAFA] text-[16px]">You will be renaming the group name {groupName}</span>
+            <div className="flex flex-col w-full gap-[1.5rem]">
+                <span className="text-[#FAFAFA] text-[16px] opacity-75">You will be renaming the group name {groupName}</span>
 
                 <input type="text" id="group_name" 
                 defaultValue={groupName} onBlur={(e)=>setName(e.target.value)}

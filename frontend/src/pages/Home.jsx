@@ -22,17 +22,19 @@ import { useUserContext } from '../context/userContext';
 import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
 import { GroupEditModal } from '../components/modal/GroupEditModal';
+import { CardEditModal } from '../components/modal/CardEditModal';
 
 const Home = () => {
 
     const user = useUserContext();
     const [groupModalOpen, setGroupModalOpen] = useState(false);
     const [addLinkModalOpen, setAddLinkModalOpen] = useState(false);
-
-
+    
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
+
     const [selectedGroupEditModal, setSelectedGroupEditModal] = useState(null);
+    const [selectedCardEditModal, setSelectedCardEditModal] = useState(null);
 
     const { data: groups = [], error, isLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
@@ -43,19 +45,29 @@ const Home = () => {
 
 
     const { data: cards = [] } = useQuery({
-        queryKey: ['cards', selectedGroup],
+        queryKey: ['cards', selectedGroupId],
         queryFn: () => getLinksPerGroup(
-            selectedGroup
+            selectedGroupId
         ),
-        enabled: !!selectedGroup
+        enabled: !!selectedGroupId
     });
+
+    const selectedCardToEdit = cards.find(card => {
+        return card.id === selectedCardEditModal
+    });
+
+
 
     const handleOpenGroupEditModal = (id) => {
         setSelectedGroupEditModal(prev => prev === id ? null : id)
     };
 
+    const handleOpenCardEditModal = (id) => {
+        setSelectedCardEditModal(prev => prev === id ? null : id)
+    };
 
-    
+
+
 
     return (
         <>
@@ -95,6 +107,9 @@ const Home = () => {
                                 setGroupModalOpen={setGroupModalOpen}
                                 cards={cards}
                                 selectedGroup={selectedGroup}
+
+                                // for editing card 
+                                handleOpenCardEditModal={handleOpenCardEditModal}
                             /> 
                         </div>
                     )}
@@ -130,6 +145,16 @@ const Home = () => {
                         groupId={selectedGroupToEdit?.id}
                         groupName={selectedGroupToEdit?.name}
                         setSelectedGroupEditModal={setSelectedGroupEditModal}
+                    />
+                </div>
+            )}
+
+            {selectedCardEditModal && (
+                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+                    <CardEditModal 
+                        cardId={selectedCardToEdit?.id}
+                        cardTitle={selectedCardToEdit?.title}
+                        setSelectedCardEditModal={setSelectedCardEditModal}
                     />
                 </div>
             )}

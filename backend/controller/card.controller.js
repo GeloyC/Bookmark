@@ -6,7 +6,6 @@ export const createLink = async (req, res, next) => {
     try {
         const {  
             card_holder_id,
-            group_name,
             group_id,
             link
         } = req.body;
@@ -24,15 +23,12 @@ export const createLink = async (req, res, next) => {
             });
         };
 
-        console.log('Incoming link: ', link);
         let title = await getFromCheerio(link);
-        console.log('Cheerio Title: ', title);
         
         const newCard = await db.one(
             `INSERT INTO cards
                 (
                     card_holder_id,
-                    group_name,
                     group_id,
                     title,
                     link
@@ -40,12 +36,10 @@ export const createLink = async (req, res, next) => {
                     $1,
                     $2,
                     $3,
-                    $4,
-                    $5
+                    $4
                 ) RETURNING *`,
                 [
                     card_holder_id,
-                    group_name,
                     group_id,
                     title,
                     link
@@ -95,15 +89,55 @@ export const updateLinkById = async (req, res, next) => {
 }
 
 
+export const updateCardTitle = async (req, res, next) => {
+    try {
+
+        const { title } = req.body;
+        const id = req.params.id;
+
+        if (!title || null || title == "") {
+            return res.status(404).json({
+                success: false,
+                message: 'Title is required'
+            });
+        }
+
+        if (!id) {
+            return res.status(404).json({
+                success: false,
+                message: 'Group ID not found'
+            });
+        }
+
+        const updatedCard = await db.one(
+            `UPDATE cards 
+            SET title = $1
+            WHERE id = $2
+            RETURNING title`,
+            [ title, id ]
+        );
+
+        return res.status(200).json({
+            success: true,
+            message: 'Title updated successfully!',
+            data: updatedCard.title
+        });
+        
+    } catch (err) {
+        next(err);  
+    }
+}
+
+
 export const getCardsByGroup = async (req, res, next) => {
     try {
-        const group_name = req.query.groups;
+        const group_id = req.query.group_id;
 
         const allCard = await db.manyOrNone(
             `SELECT * FROM cards
-            WHERE group_name = $1
+            WHERE group_id = $1
             ORDER BY date_created DESC`,
-            [ group_name ]
+            [ group_id ]
         );
 
         return res.status(200).json({

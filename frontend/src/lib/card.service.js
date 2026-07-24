@@ -4,7 +4,6 @@ import axios from "axios";
 
 export const createNewLink = async (
     card_holder_id,
-    group_name,
     group_id,
     link
 ) => {
@@ -13,7 +12,6 @@ export const createNewLink = async (
             `${BASE_URL}/card/v1/new`,
             {
                 card_holder_id: card_holder_id,
-                group_name: group_name,
                 group_id: group_id,
                 link: link
             },
@@ -29,15 +27,18 @@ export const createNewLink = async (
 };
 
 
-export const updateLinkById = async (
+export const updateLinkTitle = async (
     id, 
     title
 ) => {
-    console.log('Title: ', title);
-
     try {
-        const response = await axios.put(
-            `${BASE_URL}/card/v1/${id}/updatedLink`, 
+        if (!title) {
+            console.log('Title not changed');
+            return;
+        }
+
+        const response = await axios.patch(
+            `${BASE_URL}/card/v1/${id}/title`, 
             { title: title },
             { withCredentials: true }
         );
@@ -49,13 +50,13 @@ export const updateLinkById = async (
 }
 
 
-export const getLinksPerGroup = async ( group_name ) => {
+export const getLinksPerGroup = async ( group_id ) => {
     try {
         const cards = await axios.get(
             `${BASE_URL}/card/v1/links`,
             {
                 params: {
-                    groups: group_name
+                    group_id: group_id
                 },
                 withCredentials: true
             }
