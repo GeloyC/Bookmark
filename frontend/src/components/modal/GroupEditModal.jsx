@@ -45,7 +45,7 @@ export const GroupEditModal = ({
 
 
     return (
-        <div tabIndex={-1} onKeyDown={handleKeyDown} className="flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1.5rem]">
+        <div tabIndex={-1} onKeyDown={handleKeyDown} className="modal-in flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1.5rem]">
 
             <div className="flex items-center justify-between w-full">
                 <span className="text-[24px] text-[#FAFAFA] font-bold">Do you want to rename '{groupName}' ?</span>

@@ -72,8 +72,6 @@ export const getLinksPerGroup = async ( group_id ) => {
 
 export const deleteSelectedCard = async ( id ) => {
     try {
-        console.log('Received id from frontend: ', id);
-
         const response = await axios.delete(
             `${BASE_URL}/card/v1/${id}`,
             { withCredentials: true }

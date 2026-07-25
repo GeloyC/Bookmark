@@ -6,13 +6,6 @@ body {
 }
 
 
-/* .thin-scrollbar {
-  scrollbar-width: thin; 
-  scrollbar-color: #999 transparent;
-} */
-
-
-/* Chrome, Edge, Safari */
 .thin-scrollbar::-webkit-scrollbar {
   width: 5px;
   height: 5px;
@@ -32,3 +25,20 @@ body {
   background-color: #777;
 }
 
+
+
+/* Modal movement */
+@keyframes modalIn {
+  from {
+    opacity: 0%;
+    transform: translateY(5%);
+  }
+  to {
+    opacity: 100%;
+    transform: translateY(0%);
+  }
+}
+
+.modal-in {
+  animation: modalIn 0.2s ease-in-out;
+}

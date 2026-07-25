@@ -23,6 +23,8 @@ import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
 import { GroupEditModal } from '../components/modal/GroupEditModal';
 import { CardEditModal } from '../components/modal/CardEditModal';
+import { DeleteGroupWarning } from '../components/modal/DeleteGroupWarning';
+import { DeleteCardWarning } from '../components/modal/DeleteCardWarning';
 
 const Home = () => {
 
@@ -34,17 +36,21 @@ const Home = () => {
     const [selectedGroupId, setSelectedGroupId] = useState(null);
 
     const [selectedGroupEditModal, setSelectedGroupEditModal] = useState(null);
-    const [selectedCardEditModal, setSelectedCardEditModal] = useState(null);
+    const [selectedGroupDeleteModal, setSelectedGroupDeleteModal] = useState(null);
 
-    const { data: groups = [], error, isLoading, isError } = useQuery({
+    const [selectedCardEditModal, setSelectedCardEditModal] = useState(null);
+    const [selectedCardDeleteModal, setSelectedCardDeleteModal] = useState(null)
+
+    const { data: groups = [], error, isLoading: isGroupsLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
         queryFn: () => getGroupsById(user.id)
     });
 
-    const selectedGroupToEdit = groups.find(g => { return g.id === selectedGroupEditModal });
+    const selectedGroupToEdit = groups.find(g =>  g.id === selectedGroupEditModal);
+    const selectedGroupToDelete = groups.find(group => group.id === selectedGroupDeleteModal);
 
 
-    const { data: cards = [] } = useQuery({
+    const { data: cards = [], isLoading:isCardsLoading } = useQuery({
         queryKey: ['cards', selectedGroupId],
         queryFn: () => getLinksPerGroup(
             selectedGroupId
@@ -52,18 +58,24 @@ const Home = () => {
         enabled: !!selectedGroupId
     });
 
-    const selectedCardToEdit = cards.find(card => {
-        return card.id === selectedCardEditModal
-    });
-
+    const selectedCardToEdit = cards.find(card => card.id === selectedCardEditModal);
+    const selectedCardToDelete = cards.find(card => card.id === selectedCardDeleteModal);
 
 
     const handleOpenGroupEditModal = (id) => {
-        setSelectedGroupEditModal(prev => prev === id ? null : id)
+        setSelectedGroupEditModal(prev => prev === id ? null : id);
+    };
+
+    const handleOpenGroupDeleteModal = (id) => {
+        setSelectedGroupDeleteModal(prev => prev === id ? null : id);
     };
 
     const handleOpenCardEditModal = (id) => {
-        setSelectedCardEditModal(prev => prev === id ? null : id)
+        setSelectedCardEditModal(prev => prev === id ? null : id);
+    };
+
+    const handleOpenCardDeleteModal = (id) => {
+        setSelectedCardDeleteModal(prev => prev === id ? null : id);
     };
 
 
@@ -83,6 +95,7 @@ const Home = () => {
                         setGroupModalOpen={setGroupModalOpen}
                         setSelectedGroupId={setSelectedGroupId}
                         handleOpenGroupEditModal={handleOpenGroupEditModal}
+                        handleOpenGroupDeleteModal={handleOpenGroupDeleteModal}
                     />
 
                 </div>
@@ -107,9 +120,11 @@ const Home = () => {
                                 setGroupModalOpen={setGroupModalOpen}
                                 cards={cards}
                                 selectedGroup={selectedGroup}
+                                isCardsLoading={isCardsLoading}
 
                                 // for editing card 
                                 handleOpenCardEditModal={handleOpenCardEditModal}
+                                handleOpenCardDeleteModal={handleOpenCardDeleteModal}
                             /> 
                         </div>
                     )}
@@ -149,12 +164,35 @@ const Home = () => {
                 </div>
             )}
 
+            {selectedGroupDeleteModal && (
+                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+                    <DeleteGroupWarning
+                        // add a close function here to close the modal
+                        groupId={selectedGroupToDelete?.id}
+                        groupName={selectedGroupToDelete?.name}
+                        cardCount={selectedGroupToDelete?.card_count}
+                        setSelectedGroupDeleteModal={setSelectedGroupDeleteModal}
+                    />
+                </div>
+            )}
+
             {selectedCardEditModal && (
                 <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
                     <CardEditModal 
                         cardId={selectedCardToEdit?.id}
                         cardTitle={selectedCardToEdit?.title}
                         setSelectedCardEditModal={setSelectedCardEditModal}
+                    />
+                </div>
+            )}
+
+            {selectedCardDeleteModal && (
+                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+                    <DeleteCardWarning 
+                        userId={user.id}
+                        cardId={selectedCardToDelete?.id}
+                        cardTitle={selectedCardToDelete?.title}
+                        setSelectedCardDeleteModal={setSelectedCardDeleteModal}
                     />
                 </div>
             )}

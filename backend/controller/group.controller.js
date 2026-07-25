@@ -52,8 +52,16 @@ export const allGroups = async (req, res, next) => {
         const group_holder_id = req.params.group_holder_id;
 
         const groups = await db.manyOrNone(
-            `SELECT * FROM groups 
-            WHERE group_holder_id = $1`,
+            `SELECT 
+                g.*,
+                COUNT(c.id) AS card_count
+            FROM "groups" g
+            LEFT JOIN cards c 
+                ON c.group_id = g.id 
+            WHERE 
+                group_holder_id = $1
+            GROUP BY 
+                g.id;`,
             [ group_holder_id ]
         );
 
@@ -66,6 +74,7 @@ export const allGroups = async (req, res, next) => {
         next(err);
     }
 }
+
 
 
 export const deleteSelectedGroup = async (req, res, next) => {

@@ -32,7 +32,7 @@ export const GroupCreateModal = ({
 
     
     return (
-        <div className="flex flex-col items-start w-[500px] bg-[#191919] p-[1rem] pb-[1.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
+        <div className="modal-in flex flex-col items-start w-[500px] bg-[#191919] p-[2rem] pb-[1.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
             <div className="flex items-center justify-between w-full">
                 <span className="text-[#FAFAFA] text-[18px] font-bold">Create Group</span>
                 <button onClick={() => setCloseModal(false)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
@@ -45,7 +45,7 @@ export const GroupCreateModal = ({
                 className='flex w-full text-[#FAFAFA] p-3 bg-[#252525] rounded-[10px] focus:outline-none border border-[#252525] focus:border-[#A8DF8E] transition-all duration-100'/>
 
                 <div className='flex items-center gap-1 w-full'>
-                    <button onClick={() => createGroupMutation.mutate()} className='w-full py-[0.5rem] rounded-[10px] bg-[#A8DF8E] hover:bg-[#8cd56a] active:bg-[#A8DF8E] cursor-pointer'>
+                    <button onClick={() => createGroupMutation.mutate()} className='w-full py-[0.5rem] rounded-[10px] bg-[#8cd56a] hover:bg-[#A8DF8E] active:bg-[#8cd56a] cursor-pointer'>
                         <span className='text-center text-[16px] text-[#191919] font-bold'>Create</span>
                     </button>
                     <button onClick={() => setCloseModal(false)} className='w-full py-[0.5rem] rounded-[10px] bg-[#191919] hover:bg-[#252525] active:bg-[#191919] cursor-pointer'>

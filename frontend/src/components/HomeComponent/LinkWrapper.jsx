@@ -15,12 +15,24 @@ export const LinkWrapper = ({
     setOpenAddLinkModal,
     cards,
     selectedGroup,
-    handleOpenCardEditModal
+    handleOpenCardEditModal,
+    isCardsLoading,
+    handleOpenCardDeleteModal
 }) => {
+
+    if (isCardsLoading) {
+        return (
+            <div className='flex flex-col items-center justify-center w-full min-h-[650px] gap-[0.5rem] p-[1rem] rounded-[10px]'>
+                <span className='text-[#FAFAFA]'>
+                    loading...
+                </span>
+            </div>
+        )
+    }
 
 
     return (
-        <div className='flex flex-col items-center justify-start w-full h-full gap-[0.5rem] bg-[#191919] p-[1rem] rounded-[10px]'>
+        <div className={`flex flex-col items-center justify-start w-full h-full gap-[0.5rem] ${cards.length == 0 ? '' : 'bg-[#191919]'}  p-[1rem] rounded-[10px]`}>
             {cards.length > 0 && (
                 <div className='flex items-center justify-between w-full'>
                     <span className='text-[#FAFAFA] opacity-50 leading-none'>Showing {cards.length} results</span>
@@ -37,6 +49,7 @@ export const LinkWrapper = ({
                         <Card key={card.id} 
                             card={card}
                             handleOpenCardEditModal={handleOpenCardEditModal}
+                            handleOpenCardDeleteModal={handleOpenCardDeleteModal}
                         />
                     ))
                 ) : (

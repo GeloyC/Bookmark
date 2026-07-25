@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // icons
 import Folder from '/src/assets/Icons/folder.svg?react';
@@ -7,7 +6,7 @@ import Close from '/src/assets/Icons/close.svg?react';
 import Edit from '/src/assets/Icons/edit.svg?react';
 
 // service
-import { deleteGroupByID, getGroupsById } from '../../lib/group.service';
+import { deleteGroupByID } from '../../lib/group.service';
 import { Group } from './Group/Group';
 
 export const GroupWrapper = ({
@@ -17,33 +16,14 @@ export const GroupWrapper = ({
     setSelectedGroup, // passed this setState from /Home.jsx
     setSelectedGroupId,
     setGroupModalOpen,
-    handleOpenGroupEditModal
+    handleOpenGroupEditModal,
+    handleOpenGroupDeleteModal
 }) => {
-
-    const queryClient = useQueryClient();
-    const handleDeleteGroup = useMutation({
-        mutationFn: async (id) => {
-            const res = await deleteGroupByID(id);
-            return res;
-        },
-        onSuccess: (res) => {
-            console.log('Group deleted: ', res.data);
-            queryClient.invalidateQueries({
-                queryKey: ['groups']
-            })
-
-            queryClient.invalidateQueries({
-                queryKey: ['cards']
-            })
-        }
-    });
 
 
     const handleSelectGroupId = (id) => {
         setSelectedGroupId(prev => prev === id ? null : id);
-        console.log('Selected group id: ', id);
     }   
-
 
 
     return (
@@ -64,8 +44,8 @@ export const GroupWrapper = ({
                         selectedGroup={selectedGroup}
                         setSelectedGroup={setSelectedGroup}
                         handleSelectGroupId={handleSelectGroupId}
-                        handleDeleteGroup={() => handleDeleteGroup.mutate(group.id)}
                         handleOpenGroupEditModal={handleOpenGroupEditModal}
+                        handleOpenGroupDeleteModal={handleOpenGroupDeleteModal}
                     />
                 ))}
             </div>

@@ -14,21 +14,13 @@ import { deleteSelectedCard } from '../../../lib/card.service.js';
 
 export const Card = ({ 
     card,
-    handleOpenCardEditModal
+    handleOpenCardEditModal,
+    handleOpenCardDeleteModal
 }) => {
 
 
-    const queryClient = useQueryClient();
-    const handleDeleteLink = useMutation({
-        mutationFn: async ({ id }) => {
-            console.log('Selected ID: ', id);
-            await deleteSelectedCard(id);
-        }, onSuccess: () => {
-            queryClient.invalidateQueries({
-                queryKey: ['cards']
-            });
-        }
-    })
+    // const queryClient = useQueryClient();
+    
 
     const [isCopied, setIsCopied] = useState(null);
 
@@ -64,7 +56,7 @@ export const Card = ({
                     </button>
                 )}
 
-                <button onClick={() => handleDeleteLink.mutate({id: card.id})} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                <button onClick={() => handleOpenCardDeleteModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                     <Delete className="w-[25px] h-[25px]" />
                 </button>
             </div>
