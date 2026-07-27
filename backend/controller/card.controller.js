@@ -1,5 +1,6 @@
 import db from "../config/db.js";
 import { getFromCheerio } from "../service/scrapers/cheerio.js";
+import { getFromPlaywright } from "../service/scrapers/playwright.js";
 
 
 export const createLink = async (req, res, next) => {
@@ -23,7 +24,19 @@ export const createLink = async (req, res, next) => {
             });
         };
 
-        let title = await getFromCheerio(link);
+        let title;
+
+        try {
+            title = await getFromCheerio(link);
+
+            // Fallback if Cheerio couldn't retrieve a title
+            if (!title) {
+                throw new Error("Cheerio returned an empty title.");
+            }
+        } catch (err) {
+            console.log("Cheerio failed. Falling back to Playwright...");
+            title = await getFromPlaywright(link);
+        }
         
         const newCard = await db.one(
             `INSERT INTO cards

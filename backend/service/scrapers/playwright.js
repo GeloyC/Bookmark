@@ -9,7 +9,7 @@ export const getFromPlaywright = async (link) => {
 
     try {
         await page.goto(link, {
-            waitUntil: "networkidle",
+            waitUntil: "load",
             timeout: 10000
         });
 

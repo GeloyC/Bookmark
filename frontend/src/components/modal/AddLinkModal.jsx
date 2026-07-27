@@ -14,7 +14,8 @@ export const AddLinkModal = ({
     setCloseModal,
     user,
     selectedGroup,
-    groupId
+    groupId,
+    setToastMessage
 }) => {
 
     const [groupSelectionOpen, setGroupSelectionOpen] = useState(false);
@@ -97,6 +98,9 @@ export const AddLinkModal = ({
                 queryKey: ['cards']
             });
             setCloseModal(false);
+            console.log('Toasting');
+            setToastMessage(`New link added to ${selectedGroup}`);
+            setTimeout(()=>setToastMessage(null), 3000);
         }
     });
 

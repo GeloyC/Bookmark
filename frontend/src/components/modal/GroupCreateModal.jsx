@@ -13,7 +13,8 @@ import { createGroup } from '../../lib/group.service.js';
 
 export const GroupCreateModal = ({
     setCloseModal,
-    user
+    user,
+    setToastMessage
 }) =>{
 
     const [groupName, setGroupName] = useState('');
@@ -27,6 +28,8 @@ export const GroupCreateModal = ({
             });
             setGroupName('');
             setCloseModal(false);
+            setToastMessage('Group created successfuly!')
+            setTimeout(() => setToastMessage(null), 3000);
         }
     });
 

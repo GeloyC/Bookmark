@@ -39,6 +39,12 @@ export const DeleteGroupWarning = ({
                 <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to delete "{groupName}" group?</span>
             </div>
 
+            {cardCount > 0 ? (
+                <span className='text-[#FAFAFA] opacity-75'>The group {groupName} contains {cardCount} links. By deleting the group, links associated to it will be delete as well.</span>
+            ):(
+                <span className='text-[#FAFAFA] opacity-75'>The group {groupName} contains {cardCount} links.</span>
+            )}
+
             <div className='flex items-center w-full gap-2'>
                 <button onClick={()=>handleDeleteGroup.mutate(groupId)} className='bg-[#B90000]/75 hover:bg-[#B90000] active:bg-[#B90000]/75 py-3 rounded-[10px] w-full cursor-pointer'>
                     <span className='text-[#FAFAFA]'>Delete</span>

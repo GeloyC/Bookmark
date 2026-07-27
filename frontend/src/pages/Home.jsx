@@ -25,6 +25,7 @@ import { GroupEditModal } from '../components/modal/GroupEditModal';
 import { CardEditModal } from '../components/modal/CardEditModal';
 import { DeleteGroupWarning } from '../components/modal/DeleteGroupWarning';
 import { DeleteCardWarning } from '../components/modal/DeleteCardWarning';
+import { Toast } from '../components/Toast/Toast';
 
 const Home = () => {
 
@@ -40,6 +41,8 @@ const Home = () => {
 
     const [selectedCardEditModal, setSelectedCardEditModal] = useState(null);
     const [selectedCardDeleteModal, setSelectedCardDeleteModal] = useState(null)
+
+    const [toastMessage, setToastMessage] = useState(null);
 
     const { data: groups = [], error, isLoading: isGroupsLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
@@ -137,6 +140,7 @@ const Home = () => {
                         // add a close function here to close the modal
                         setCloseModal={setGroupModalOpen}
                         user={user}
+                        setToastMessage={setToastMessage}
                     />
                 </div>
             )}
@@ -149,6 +153,7 @@ const Home = () => {
                         user={user}
                         selectedGroup={selectedGroup}
                         groupId={selectedGroupId}
+                        setToastMessage={setToastMessage}
                     />
                 </div>
             )}
@@ -193,6 +198,16 @@ const Home = () => {
                         cardId={selectedCardToDelete?.id}
                         cardTitle={selectedCardToDelete?.title}
                         setSelectedCardDeleteModal={setSelectedCardDeleteModal}
+                    />
+                </div>
+            )}
+
+            {toastMessage && (
+                <div className='absolute bottom-4 right-8'>
+                    <Toast 
+                        className={'text-[#FAFAFA] whitespace-nowrap w-full'}
+                        message={toastMessage}
+                        setToastMessage={setToastMessage}
                     />
                 </div>
             )}
