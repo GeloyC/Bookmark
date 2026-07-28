@@ -13,8 +13,8 @@ export const createLink = async (req, res, next) => {
 
         const checkLink = await db.oneOrNone(
             `SELECT * FROM cards 
-            WHERE link = $1`,
-            [ link ]
+            WHERE group_id = $1 AND link = $2`,
+            [ group_id, link ]
         );
 
         if (checkLink) {

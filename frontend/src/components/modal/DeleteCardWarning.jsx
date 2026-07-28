@@ -8,7 +8,8 @@ export const DeleteCardWarning = ({
     userId,
     cardId,
     cardTitle,
-    setSelectedCardDeleteModal
+    setSelectedCardDeleteModal,
+    setDeleteToastMessage
 }) => {
     
     const queryClient = useQueryClient();
@@ -26,6 +27,9 @@ export const DeleteCardWarning = ({
             queryClient.invalidateQueries({
                 queryKey: ['groups', userId]
             });
+
+            setDeleteToastMessage(`Link successfully deleted!`);
+            setTimeout(()=>setDeleteToastMessage(null), 3000);
         }
     })
 

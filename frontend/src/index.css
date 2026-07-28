@@ -39,6 +39,50 @@ body {
   }
 }
 
+@keyframes modalOut {
+  from {
+    opacity: 100%;
+    transform: translateY(0%);    
+  }
+  to {
+    opacity: 0%;
+    transform: translateY(5%);
+  }
+}
+
+
+
 .modal-in {
-  animation: modalIn 0.2s ease-in-out;
+  animation: modalIn 0.2s ease-in-out forwards;
+}
+
+.modal-out {
+  animation: modalOut 0.2s ease-in-out forwards;
+}
+
+
+@keyframes toast {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  10% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  85% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+.toast-animation {
+  animation: toast 3s ease-in-out forwards;
 }

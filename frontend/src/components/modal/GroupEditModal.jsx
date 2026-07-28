@@ -11,7 +11,8 @@ import { editGroupName } from "../../lib/group.service";
 export const GroupEditModal = ({
     groupId,
     setSelectedGroupEditModal,
-    groupName
+    groupName,
+    setEditToastMessage
 }) => {
 
     const [name, setName] = useState(groupName);
@@ -40,6 +41,9 @@ export const GroupEditModal = ({
             queryClient.invalidateQueries({
                 queryKey: ['groups']
             })
+
+            setEditToastMessage(`Group title updated successfully!`);
+            setTimeout(()=>setEditToastMessage(null), 3000)
         }
     });
 

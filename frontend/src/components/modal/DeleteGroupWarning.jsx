@@ -8,10 +8,13 @@ import { deleteGroupByID } from '../../lib/group.service';
 import Close from '/src/assets/Icons/close.svg?react';
 
 export const DeleteGroupWarning = ({
+    userId,
     groupId,
     groupName,
     cardCount,
-    setSelectedGroupDeleteModal
+    setSelectedGroupDeleteModal,
+    setDeleteToastMessage,
+    setSelectedGroup
 }) => {
 
     const queryClient = useQueryClient();
@@ -23,13 +26,19 @@ export const DeleteGroupWarning = ({
         onSuccess: (res) => {
             console.log('Group deleted: ', res.data);
             setSelectedGroupDeleteModal(null);
+            setSelectedGroup(null);
+            
             queryClient.invalidateQueries({
-                queryKey: ['groups']
+                queryKey: ['groups', userId]
             })
 
             queryClient.invalidateQueries({
-                queryKey: ['cards']
-            })
+                queryKey: ['cards', groupId]
+            });
+
+            
+            setDeleteToastMessage(`${groupName} deleted successfully!`);
+            setTimeout(()=>setDeleteToastMessage(null), 3000)
         }
     });
 

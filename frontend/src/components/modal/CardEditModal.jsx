@@ -9,7 +9,8 @@ import { updateLinkTitle } from "../../lib/card.service.js";
 export const CardEditModal = ({
     cardId,
     cardTitle,
-    setSelectedCardEditModal
+    setSelectedCardEditModal,
+    setEditToastMessage
 }) => {
 
     const [originalTitle, setOriginalTitle] = useState(cardTitle);
@@ -40,6 +41,8 @@ export const CardEditModal = ({
                 queryKey: ['cards']
             });
             setSelectedCardEditModal(null);
+            setEditToastMessage('Link title updated successfully!');
+            setTimeout(()=>setEditToastMessage(null), 3000);
         }
     });
 

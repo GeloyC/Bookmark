@@ -16,7 +16,7 @@ function App() {
   const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 
   return (
-      <div className='relative flex flex-col w-full h-auto'>
+      <div className='relative flex flex-col w-full h-screen'>
         <Navigation 
           setLoginModalOpen={setLoginModalOpen}
           setCreateAccountModalOpen={setCreateAccountModalOpen}

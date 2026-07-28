@@ -21,17 +21,22 @@ import { useUserContext } from '../context/userContext';
 // services
 import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
+
+// components
 import { GroupEditModal } from '../components/modal/GroupEditModal';
 import { CardEditModal } from '../components/modal/CardEditModal';
 import { DeleteGroupWarning } from '../components/modal/DeleteGroupWarning';
 import { DeleteCardWarning } from '../components/modal/DeleteCardWarning';
 import { Toast } from '../components/Toast/Toast';
+import { DeleteToast } from '../components/Toast/DeleteToast';
+import { EditToast } from '../components/Toast/EditToast';
 
 const Home = () => {
 
     const user = useUserContext();
     const [groupModalOpen, setGroupModalOpen] = useState(false);
     const [addLinkModalOpen, setAddLinkModalOpen] = useState(false);
+    
     
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
@@ -43,6 +48,8 @@ const Home = () => {
     const [selectedCardDeleteModal, setSelectedCardDeleteModal] = useState(null)
 
     const [toastMessage, setToastMessage] = useState(null);
+    const [deleteToastMessage, setDeleteToastMessage] = useState(null);
+    const [editToastMessage, setEditToastMessage] = useState(null);
 
     const { data: groups = [], error, isLoading: isGroupsLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
@@ -81,12 +88,11 @@ const Home = () => {
         setSelectedCardDeleteModal(prev => prev === id ? null : id);
     };
 
-
-
+    console.log('Check content of delete toast message: ', deleteToastMessage);
 
     return (
         <>
-            <div className='grid grid-cols-[1fr_4fr] w-full h-auto rounded-[15px] px-[1rem] gap-[1rem]'>
+            <div className='grid grid-cols-[1fr_4fr] w-full h-full rounded-[15px] px-[1rem] gap-[1rem]'>
 
                 {/* TABS of category */}
                 <div className='flex flex-col items-center justify-between w-full h-auto gap-1'>
@@ -112,7 +118,7 @@ const Home = () => {
                                 <span className='text-[#FAFAFA]'>Create Group</span>
                             </button>
                         </div>
-                    ) : groups.length > 0 && selectedGroup === null ? (
+                    ) : groups.length > 0 && !selectedGroup ? (
                         <div className='flex flex-col items-center justify-center w-full min-h-[700px]'>
                             <span className='text-[#FAFAFA]'>Select ka muna tols</span>    
                         </div>
@@ -165,6 +171,7 @@ const Home = () => {
                         groupId={selectedGroupToEdit?.id}
                         groupName={selectedGroupToEdit?.name}
                         setSelectedGroupEditModal={setSelectedGroupEditModal}
+                        setEditToastMessage={setEditToastMessage}
                     />
                 </div>
             )}
@@ -173,10 +180,13 @@ const Home = () => {
                 <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
                     <DeleteGroupWarning
                         // add a close function here to close the modal
+                        userId={user.id}
                         groupId={selectedGroupToDelete?.id}
                         groupName={selectedGroupToDelete?.name}
                         cardCount={selectedGroupToDelete?.card_count}
+                        setSelectedGroup={setSelectedGroup}
                         setSelectedGroupDeleteModal={setSelectedGroupDeleteModal}
+                        setDeleteToastMessage={setDeleteToastMessage}
                     />
                 </div>
             )}
@@ -187,6 +197,7 @@ const Home = () => {
                         cardId={selectedCardToEdit?.id}
                         cardTitle={selectedCardToEdit?.title}
                         setSelectedCardEditModal={setSelectedCardEditModal}
+                        setEditToastMessage={setEditToastMessage}
                     />
                 </div>
             )}
@@ -198,16 +209,35 @@ const Home = () => {
                         cardId={selectedCardToDelete?.id}
                         cardTitle={selectedCardToDelete?.title}
                         setSelectedCardDeleteModal={setSelectedCardDeleteModal}
+                        setDeleteToastMessage={setDeleteToastMessage}
                     />
                 </div>
             )}
 
-            {toastMessage && (
-                <div className='absolute bottom-4 right-8'>
+            {toastMessage && ( 
+                <div className='fixed bottom-6 right-6'>
                     <Toast 
-                        className={'text-[#FAFAFA] whitespace-nowrap w-full'}
                         message={toastMessage}
                         setToastMessage={setToastMessage}
+                    />
+                </div>
+            )}
+
+            {deleteToastMessage && ( 
+                <div className='fixed bottom-6 right-6'>
+                    <DeleteToast 
+                        deleteToastMessage={deleteToastMessage}
+                        setDeleteToastMessage={setDeleteToastMessage}
+                    />
+                </div>
+            )}
+
+
+            {editToastMessage && ( 
+                <div className='fixed bottom-6 right-6'>
+                    <EditToast 
+                        editToastMessage={editToastMessage}
+                        setEditToastMessage={setEditToastMessage}
                     />
                 </div>
             )}

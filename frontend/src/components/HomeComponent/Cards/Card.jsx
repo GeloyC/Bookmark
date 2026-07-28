@@ -42,7 +42,7 @@ export const Card = ({
             </Link>
 
             <div className='flex items-center gap-[0.5rem] opacity-0 group-hover:opacity-100 transition-all duration-100 px-2'>
-                <button onClick={()=>handleOpenCardEditModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                <button title='Edit' onClick={()=>handleOpenCardEditModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                         <Edit className="w-[23px] h-[23px]" />
                 </button>
 
@@ -51,12 +51,12 @@ export const Card = ({
                             <Check className="w-[23px] h-[23px]" />
                     </button>
                 ) : (
-                    <button onClick={() => handleCopyLink(card.id, card.link)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                    <button title='Copy' onClick={() => handleCopyLink(card.id, card.link)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                             <Copy className="w-[25px] h-[25px]" />
                     </button>
                 )}
 
-                <button onClick={() => handleOpenCardDeleteModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                <button title='Delete' onClick={() => handleOpenCardDeleteModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                     <Delete className="w-[25px] h-[25px]" />
                 </button>
             </div>
