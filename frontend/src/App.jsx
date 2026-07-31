@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 
 // components
 import Home from './pages/Home';
+import { GuestHhome } from './pages/GuestHome';
 import Navigation from './components/Navigation';
 import { LoginModal } from './components/modal/LoginModal';
 import { CreateAccountModal } from './components/modal/CreateAccountModal';
@@ -16,16 +17,23 @@ function App() {
   const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 
   return (
-      <div className='relative flex flex-col w-full h-screen'>
+      <div className="relative flex flex-col w-full min-h-screen">
         <Navigation 
           setLoginModalOpen={setLoginModalOpen}
           setCreateAccountModalOpen={setCreateAccountModalOpen}
           user={user}
         />
-        <Home />
+
+        {user ? (
+          <Home />
+        ): (
+          <GuestHhome 
+            setCreateAccountModalOpen={setCreateAccountModalOpen}
+          />
+        )}
 
         {loginModalOpen && (
-          <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur z-20'>
+          <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
               <LoginModal
                   setCloseModal={setLoginModalOpen}
               />
@@ -33,7 +41,7 @@ function App() {
         )}
 
         {createAccountModalOpen && (
-          <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+          <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
               <CreateAccountModal
                   setCloseModal={setCreateAccountModalOpen}
               />

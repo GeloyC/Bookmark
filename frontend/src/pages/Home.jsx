@@ -92,7 +92,7 @@ const Home = () => {
 
     return (
         <>
-            <div className='grid grid-cols-[1fr_4fr] w-full h-full rounded-[15px] px-[1rem] gap-[1rem]'>
+            <div className='grid grid-cols-[1fr_4fr] w-full h-full rounded-[15px] gap-[1rem] px-[2rem]'>
 
                 {/* TABS of category */}
                 <div className='flex flex-col items-center justify-between w-full h-auto gap-1'>
@@ -168,6 +168,7 @@ const Home = () => {
                 <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
                     <GroupEditModal
                         // add a close function here to close the modal
+                        userId={user.id}
                         groupId={selectedGroupToEdit?.id}
                         groupName={selectedGroupToEdit?.name}
                         setSelectedGroupEditModal={setSelectedGroupEditModal}

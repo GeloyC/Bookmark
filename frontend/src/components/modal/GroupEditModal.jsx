@@ -9,6 +9,7 @@ import { editGroupName } from "../../lib/group.service";
 // service
 
 export const GroupEditModal = ({
+    userId,
     groupId,
     setSelectedGroupEditModal,
     groupName,
@@ -36,10 +37,9 @@ export const GroupEditModal = ({
 
             return response;
         }, onSuccess: (response) => {
-            console.log('Result: ', response);
             setSelectedGroupEditModal(null);
             queryClient.invalidateQueries({
-                queryKey: ['groups']
+                queryKey: ['groups', userId]
             })
 
             setEditToastMessage(`Group title updated successfully!`);

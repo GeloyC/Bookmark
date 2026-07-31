@@ -95,12 +95,12 @@ export const CreateAccountModal = ({
 
 
     return (
-        <div role='dialog' className="flex flex-col items-start w-[500px] h-auto bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
+        <div role='dialog' className="relative modal-in flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]">
+            <button onClick={() => setCloseModal(false)} className="absolute top-3 right-3 cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
+                <Close className="w-[20px] h-[20px]" />
+            </button>
             <div className="flex items-center justify-between w-full">
-                <span className="text-[20px] text-[#8cd56a] font-bold">CREATE ACCOUNT</span>
-                <button onClick={() => setCloseModal(false)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
-                    <Close className="w-[20px] h-[20px]" />
-                </button>
+                <span className="text-[22px] text-[#8cd56a] text-center font-bold w-full">CREATE YOUR ACCOUNT</span>
             </div>
 
             <div className='flex flex-col w-full items-start gap-[0.5rem]'>
@@ -124,10 +124,6 @@ export const CreateAccountModal = ({
             <div className='flex flex-col w-full gap-2 pt-3'>
                 <button onClick={handleSignUp} className='flex items-center justify-center gap-2 bg-[#8cd56a] hover:bg-[#71cb47] active:bg-[#8cd56a] py-3 rounded-[10px] cursor-pointer'>
                     <span className='text-[#141414] text-[16px] font-bold'>{loading ? 'Creating...' : 'Create'}</span>
-                </button>
-
-                <button onClick={() => setCloseModal(false)} className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#252525]/50 active:bg-[#252525] py-3 rounded-[10px] cursor-pointer'>
-                    <span className='text-[#FAFAFA]'>Cancel</span>
                 </button>
             </div>
         </div>

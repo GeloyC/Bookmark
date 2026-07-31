@@ -26,6 +26,7 @@ export const Group = ({
             onChange={(e) => {
                 setSelectedGroup(e.target.value);
             }}/>
+            
             <label htmlFor={`group_id_${group.id}`} onClick={()=>handleSelectGroupId(group.id)} className={`px-3 ${selectedGroup === group.name ? 'active:bg-[#191919]' : 'hover:bg-[#252525]/75 active:bg-[#191919]'} flex items-center gap-2 h-full w-full cursor-pointer flex items-center rounded-l-[7px]`}>
                 <span className='text-[#FAFAFA] opacity-90 leading-none max-w-[175px] truncate'>{group.name}</span>
 

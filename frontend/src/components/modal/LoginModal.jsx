@@ -33,7 +33,7 @@ export const LoginModal = ({
     }
 
     return (
-        <div className="flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]" >
+        <div className="modal-in flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]" >
             <div className="flex items-center justify-between w-full">
                 <span className="text-[20px] text-[#8cd56a] font-bold">LOG IN</span>
                 <button onClick={() => setCloseModal(false)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
