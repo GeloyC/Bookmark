@@ -36,7 +36,7 @@ export const LinkWrapper = ({
     console.log('Group: ', selectedGroup)
 
     return (
-        <div className={`flex flex-col items-center justify-start w-full h-auto gap-[0.5rem] ${cards.length == 0 ? '' : 'bg-[#191919]'}  p-[1rem] rounded-[10px]`}>
+        <div className={`flex flex-col items-center justify-start w-full h-auto gap-[1rem] ${cards.length == 0 ? '' : 'bg-[#191919]'}  p-[1rem] rounded-[10px]`}>
             {cards.length > 0 && (
                 <div className='flex items-center justify-between w-full'>
                     <div className='flex items-center gap-[2rem]'>
@@ -44,8 +44,8 @@ export const LinkWrapper = ({
                         <span className='text-[#FAFAFA] opacity-50 leading-none'>Showing {cards.length} results</span>
                     </div>
 
-                        <button onClick={() => setOpenAddLinkModal(true)}  title='Add Link' type='button' className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#191919] active:bg-[#252525] h-[40px] px-2 border-1 border-dashed border-[#FAFAFA]/50 rounded-full cursor-pointer'>
-                            <Add className="w-[25px] h-[25px] opacity-75"/>
+                        <button onClick={() => setOpenAddLinkModal(true)}  title='Add Link' type='button' className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#191919] active:bg-[#252525] h-[38px] w-[38px] p-1 border-1 border-dashed border-[#FAFAFA]/50 rounded-full cursor-pointer'>
+                            <Add className="size-9 opacity-75"/>
                         </button>
                 </div>
             )}

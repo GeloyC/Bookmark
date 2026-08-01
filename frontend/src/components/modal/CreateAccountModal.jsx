@@ -99,7 +99,8 @@ export const CreateAccountModal = ({
             <button onClick={() => setCloseModal(false)} className="absolute top-3 right-3 cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                 <Close className="w-[20px] h-[20px]" />
             </button>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex flex-col items-center w-full gap-[1rem]">
+                <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className='w-[40px] h-[40px]'/>
                 <span className="text-[22px] text-[#8cd56a] text-center font-bold w-full">CREATE YOUR ACCOUNT</span>
             </div>
 

@@ -145,14 +145,14 @@ export const AddLinkModal = ({
         onAnimationEnd={()=>handleAnimationEnd()}>
 
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">ADD LINK</span>
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Save a link to <strong className='text-[#71cb47]'>{selectedGroup}</strong></span>
                 <button onClick={handleClose} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                     <Close className="w-[20px] h-[20px]" />
                 </button>
             </div>
 
             <div className='flex flex-col w-full gap-[1rem]'>
-                <span className='text-[#FAFAFA] text-[16x]'>You will be saving a new link to <strong className='text-[#8cd56a]'>{selectedGroup}</strong>.</span>
+                <span className='text-[#FAFAFA] text-[16x] opacity-50'>Paste your link below. Make sure to check the title and modify it to add a bit more context. That will help you remember what the link is about</span>
 
                 <div className='flex flex-col w-full gap-3'>
                     

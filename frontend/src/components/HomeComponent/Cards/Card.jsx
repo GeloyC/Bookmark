@@ -37,7 +37,7 @@ export const Card = ({
     return (
         <div key={card.date_created} className='group flex items-center justify-between w-full bg-[#252525] border border-[#252525]/50 rounded-[10px] min-h-[40px] overflow-hidden cursor-pointer transition-all duration-100'>
             <Link to={card.link} target='_blank' className='flex items-center gap-[1rem] bg-gradient-to-r hover:from-[#A8DF8E]/25 active:from-[#A8DF8E]/50 p-[0.5rem] px-[0.75rem] w-full cursor-pointer'>
-                <span className='text-[#FAFAFA] max-w-[500px] truncate'>{card.title}</span>
+                <span className='text-[#FAFAFA] max-w-[600px] truncate'>{card.title}</span>
                 <span className='text-[14px] text-[#FAFAFA] opacity-50 whitespace-nowrap'>{new Date(card.date_created).toDateString()}</span>
             </Link>
 
