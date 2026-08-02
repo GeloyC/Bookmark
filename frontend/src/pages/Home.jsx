@@ -14,6 +14,9 @@ import { GroupCreateModal } from '../components/modal/GroupCreateModal';
 import { GroupWrapper } from '../components/HomeComponent/GroupWrapper';
 import { LinkWrapper } from '../components/HomeComponent/LinkWrapper';
 import { AddLinkModal } from '../components/modal/AddLinkModal';
+import { Group } from '../components/HomeComponent/Group/Group';
+import { Card } from '../components/HomeComponent/Cards/Card';
+import { NoCard } from '../components/HomeComponent/Cards/NoCard';
 
 // context
 import { useUserContext } from '../context/userContext';
@@ -37,7 +40,6 @@ const Home = () => {
     const [groupModalOpen, setGroupModalOpen] = useState(false);
     const [addLinkModalOpen, setAddLinkModalOpen] = useState(false);
     
-    
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [selectedGroupId, setSelectedGroupId] = useState(null);
 
@@ -51,6 +53,7 @@ const Home = () => {
     const [deleteToastMessage, setDeleteToastMessage] = useState(null);
     const [editToastMessage, setEditToastMessage] = useState(null);
 
+
     const { data: groups = [], error, isLoading: isGroupsLoading, isError } = useQuery({
         queryKey: ['groups', user.id],
         queryFn: () => getGroupsById(user.id)
@@ -62,80 +65,78 @@ const Home = () => {
 
     const { data: cards = [], isLoading:isCardsLoading } = useQuery({
         queryKey: ['cards', selectedGroupId],
-        queryFn: () => getLinksPerGroup(
-            selectedGroupId
-        ),
+        queryFn: () => getLinksPerGroup(selectedGroupId),
         enabled: !!selectedGroupId
     });
 
     const selectedCardToEdit = cards.find(card => card.id === selectedCardEditModal);
     const selectedCardToDelete = cards.find(card => card.id === selectedCardDeleteModal);
 
+    
 
-    const handleOpenGroupEditModal = (id) => {
-        setSelectedGroupEditModal(prev => prev === id ? null : id);
-    };
+    
 
-    const handleOpenGroupDeleteModal = (id) => {
-        setSelectedGroupDeleteModal(prev => prev === id ? null : id);
-    };
-
-    const handleOpenCardEditModal = (id) => {
-        setSelectedCardEditModal(prev => prev === id ? null : id);
-    };
-
-    const handleOpenCardDeleteModal = (id) => {
-        setSelectedCardDeleteModal(prev => prev === id ? null : id);
-    };
-
-    console.log('Check content of delete toast message: ', deleteToastMessage);
 
     return (
         <>
-            <div className='grid grid-cols-[1fr_4fr] w-full h-full rounded-[15px] gap-[1rem] px-[2rem]'>
+            <div className={`${groups.length == 0 && cards.length == 0 ? 'flex items-center justify-center h-screen w-full' : 'grid grid-cols-[1fr_4fr] h-full'}  rounded-[15px] gap-[1rem] px-[2rem]`}>
+
+
+                { groups.length == 0 && cards.length == 0 && (
+                    <div className='flex items-center gap-[1rem]'>
+                        <button onClick={() => setGroupModalOpen(true)} className='flex flex-col items-center justify-center bg-[#191919] hover:bg-[#1D1D1D] active:bg-[#191919] cursor-pointer p-[1rem] px-[1.5rem] rounded-[15px] border-2 border-dashed border-[#FAFAFA]/25 gap-[0.5rem]'>
+                            <Folder className="w-[30px] h-[30px] opacity-75"/>
+                            <span className='text-[#FAFAFA]'>Create Group</span>
+                        </button>
+                    </div>
+                )}
 
                 {/* TABS of category */}
-                <div className='flex flex-col items-center justify-between w-full h-auto gap-1'>
+                {groups.length > 0 && (
                     <GroupWrapper 
                         user={user}
-                        groups={groups}
-                        selectedGroup={selectedGroup}
-                        setSelectedGroup={setSelectedGroup}
                         setGroupModalOpen={setGroupModalOpen}
-                        setSelectedGroupId={setSelectedGroupId}
-                        handleOpenGroupEditModal={handleOpenGroupEditModal}
-                        handleOpenGroupDeleteModal={handleOpenGroupDeleteModal}
-                    />
+                    >
+                        {groups.map(group => (
+                            <Group key={group.id}
+                                group={group}
+                                selectedGroup={selectedGroup}
+                                setSelectedGroup={setSelectedGroup}
+                                setSelectedGroupId={setSelectedGroupId}
+                                setSelectedGroupEditModal={setSelectedGroupEditModal}
+                                setSelectedGroupDeleteModal={setSelectedGroupDeleteModal}
+                            />
+                        ))}
+                    </GroupWrapper>
+                )}
 
-                </div>
-
-                <div className={`flex flex-col w-full h-full items-center justify-center rounded-[10px] pl-4} `}>
+                <div className={`flex flex-col w-full h-full items-center justify-center rounded-[10px]`}>
                     {/* Show this if user has not created anything yet */}
-                    {groups.length <= 0 && !user ? (
-                        <div className='flex items-center gap-[1rem]'>
-                            <button onClick={() => setGroupModalOpen(true)} className='flex flex-col items-center justify-center bg-[#191919] hover:bg-[#1D1D1D] active:bg-[#191919] cursor-pointer p-[1rem] px-[1.5rem] rounded-[15px] border-2 border-dashed border-[#FAFAFA]/25 gap-[0.5rem]'>
-                                <Folder className="w-[30px] h-[30px] opacity-75"/>
-                                <span className='text-[#FAFAFA]'>Create Group</span>
-                            </button>
-                        </div>
-                    ) : groups.length > 0 && !selectedGroup ? (
+                    {cards.length == 0 && !selectedGroup ? (
                         <div className='flex flex-col items-center justify-center w-full min-h-[700px]'>
                             <span className='text-[#FAFAFA]'>Select ka muna tols</span>    
                         </div>
                     ) : (
-                        <div className='flex flex-col items-center justify-start w-full h-full gap-[0.5rem]'>
-                            <LinkWrapper 
-                                setOpenAddLinkModal={setAddLinkModalOpen}
-                                setGroupModalOpen={setGroupModalOpen}
-                                cards={cards}
-                                selectedGroup={selectedGroup}
-                                isCardsLoading={isCardsLoading}
-
-                                // for editing card 
-                                handleOpenCardEditModal={handleOpenCardEditModal}
-                                handleOpenCardDeleteModal={handleOpenCardDeleteModal}
-                            /> 
-                        </div>
+                        <LinkWrapper 
+                            cards={cards}
+                            setOpenAddLinkModal={setAddLinkModalOpen}
+                            selectedGroup={selectedGroup}
+                            isCardsLoading={isCardsLoading}
+                        >
+                            {cards.length >= 1 ? (
+                                cards.map(card => (
+                                    <Card key={card.id}
+                                        card={card}
+                                        setSelectedCardEditModal={setSelectedCardEditModal}
+                                        setSelectedCardDeleteModal={setSelectedCardDeleteModal}
+                                    />
+                                ))
+                            ):(
+                                <NoCard 
+                                    setAddLinkModalOpen={setAddLinkModalOpen}
+                                />
+                            )}
+                        </LinkWrapper>
                     )}
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 // icons
@@ -16,8 +16,6 @@ const Navigation = ({
   user
 }) => {
 
-  console.log(user);
-  const location = useLocation();
 
   const [accountDropdown, setAccountDropdown] = useState(false);
 
@@ -54,7 +52,6 @@ const Navigation = ({
           </div>
         ) : (
           <div className='flex items-center justify-center'>
-              {/* <span className='text-[#191919] font-bold px-2 pl-3'>{user.name}</span> */}
               <button onClick={logOutUser} className='p-2 rounded-full  cursor-pointer bg-[#71cb47]/80 hover:bg-[#71cb47] active:bg-[#71cb47]/80 cursor-pointer transition-all duration-100' title="Log out" >
                   <Logout className="size-5" />
               </button>

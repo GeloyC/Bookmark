@@ -11,12 +11,22 @@ export const Group = ({
     group,
     selectedGroup,
     setSelectedGroup,
-    handleSelectGroupId,
-    handleOpenGroupEditModal,
-    handleOpenGroupDeleteModal
+    setSelectedGroupId,
+    setSelectedGroupEditModal,
+    setSelectedGroupDeleteModal
 }) => {
 
+    const handleSelectGroupId = (group_id) => {
+        setSelectedGroupId(prev => prev === group_id ? null : group_id)
+    }
 
+    const handleOpenGroupEditModal = (id) => {
+        setSelectedGroupEditModal(prev => prev === id ? null : id);
+    };
+    
+    const handleOpenGroupDeleteModal = (id) => {
+        setSelectedGroupDeleteModal(prev => prev === id ? null : id);
+    };
 
 
     return (

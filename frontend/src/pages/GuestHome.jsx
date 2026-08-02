@@ -81,7 +81,7 @@ export const GuestHhome = ({
             </section>
 
 
-            <section className="flex flex-col w-full items-center justify-center bg-[#141414] h-[300px] px-[16rem]">
+            <section className="flex flex-col w-full items-center justify-center bg-[#141414] min-h-[300px] px-[16rem]">
                 <span className="text-[#FAFAFA] text-[46px] font-bold">Get Started Today</span>
 
                 <div className="flex items-center w-full justify-center gap-2">
@@ -116,7 +116,6 @@ export const GuestHhome = ({
                                 <Check className="size-4"/>
                             </button>
                         )}
-
                     </div>
                 </div>
             </footer>
