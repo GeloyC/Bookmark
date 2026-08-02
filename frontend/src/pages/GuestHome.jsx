@@ -4,6 +4,7 @@ import { useState } from 'react';
 // icons
 import Copy from '/src/assets/Icons/copy.svg?react';
 import Check from '/src/assets/Icons/check.svg?react'
+import { Link } from 'react-router-dom';
 
 
 export const GuestHhome = ({
@@ -22,7 +23,7 @@ export const GuestHhome = ({
 
     return (
         <>
-            <div className="flex flex-col w-full items-center justify-start gap-[2rem] pt-[4rem] pb-[2rem] px-[16rem] h-full">
+            <section className="flex flex-col w-full items-center justify-start gap-[2rem] pt-[4rem] pb-[2rem] px-[16rem] h-full">
                 <div className="flex flex-col items-center w-full justify-center">
                     <span className="text-[#FAFAFA] text-8xl leading-none font-bold">Save Your Links,</span>
                     <span className="text-[#FAFAFA] text-8xl leading-none font-bold">Visit Them Later</span>
@@ -37,18 +38,18 @@ export const GuestHhome = ({
                         <span className="text-[#141414] font-bold">Get Started</span>
                     </button>
 
-                    <button className="px-6 py-3 bg-[#252525]/75 hover:bg-[#252525] active:bg-[#252525]/80 rounded-[10px] cursor-pointer transition-all duration-100">
-                        <span className="text-[#FAFAFA] font-bold">How it Works</span>
-                    </button>
+                    <a href="#explore_section" className="px-6 py-3 bg-[#252525]/75 hover:bg-[#252525] active:bg-[#252525]/80 rounded-[10px] cursor-pointer transition-all duration-100">
+                        <span className="text-[#FAFAFA] font-bold">Explore More</span>
+                    </a>
                 </div>
 
                 <div className="rounded-[10px] bg-gradient-to-b from-[#FAFAFA]/25 to-transparent p-[2px] max-w-[75rem]">
-                    <img src="/public/hero_image.png" alt="hero image" className="bg-transparent rounded-[10px]"/>
+                    <img src="/hero_image.png" alt="hero image" className="bg-transparent rounded-[10px]"/>
                 </div>
-            </div>
+            </section>
 
 
-            <div className="flex flex-col justify-center w-full h-full py-[5rem] px-[16rem] gap-[2rem] bg-[url('/public/background_pattern.png')] bg-fixed bg-[length:800px]">
+            <section id="explore_section" className="flex flex-col justify-center w-full h-full py-[5rem] px-[16rem] gap-[2rem] bg-[url('/background_pattern.png')] bg-fixed bg-[length:800px]">
                 <span className="text-left text-[#FAFAFA] text-[50px] font-bold">
                     Link management made simple.
                 </span>
@@ -60,7 +61,7 @@ export const GuestHhome = ({
                             <span className="text-[#FAFAFA] opacity-75">Categorize your links by groups. Keep related links together to make them easier to manager and revisit later.</span>
                         </div>
                         <div className="flex w-full rounded-[15px] overflow-hidden">
-                            <img src="/public/create_group.png" alt="create group modal image" />
+                            <img src="/create_group.png" alt="create group modal image" />
                         </div>
                     </div>
 
@@ -73,14 +74,14 @@ export const GuestHhome = ({
                         </div>
 
                         <div className="flex w-full rounded-[15px] overflow-hidden">
-                            <img src="/public/add_link.png" alt="add link modal image"/>
+                            <img src="/add_link.png" alt="add link modal image"/>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
 
-            <div className="flex flex-col w-full items-center justify-center bg-[#141414] h-[300px] px-[16rem]">
+            <section className="flex flex-col w-full items-center justify-center bg-[#141414] h-[300px] px-[16rem]">
                 <span className="text-[#FAFAFA] text-[46px] font-bold">Get Started Today</span>
 
                 <div className="flex items-center w-full justify-center gap-2">
@@ -88,9 +89,9 @@ export const GuestHhome = ({
                         <span className="text-[#141414] font-bold">Get Started</span>
                     </button>
                 </div>
-            </div>
+            </section>
 
-            <div className="flex items-start justify-between w-full px-[16rem] border border-t-[#FAFAFA]/10 py-[1rem]">
+            <footer className="flex items-start justify-between w-full px-[16rem] border border-t-[#FAFAFA]/10 py-[1rem]">
                 <div className="flex items-center w-full gap-[1rem]">
                     <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className="size-5"/>
                     <span className="text-[#FAFAFA] text-[14px] opacity-50 leading-tight">
@@ -118,7 +119,7 @@ export const GuestHhome = ({
 
                     </div>
                 </div>
-            </div>
+            </footer>
         </>
     )
 }

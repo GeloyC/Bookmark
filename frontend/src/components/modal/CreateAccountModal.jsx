@@ -14,9 +14,14 @@ export const CreateAccountModal = ({
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
+    const [showPassword, setShowPassword] = useState(false);
+
     const [success, setSuccess] = useState('');
     const [accountCreated, setAccountCreated] = useState(false);
-    const [error, setError] = useState('');
+
+    const [nameError, setNameError] = useState('');
+    const [usernameError, setUsernameError] = useState('');
+
     const [loading, setLoading] = useState(false);
 
     const [count, setCount] = useState(3);
@@ -70,7 +75,8 @@ export const CreateAccountModal = ({
             return response.data;
 
         } catch (err) {
-            console.log('Failed to sign up: ', err);
+            setNameError(err.response?.data.nameError);
+            setUsernameError(err.response?.data.usernameError);
         } finally {
             setLoading(false);
         }
@@ -107,18 +113,34 @@ export const CreateAccountModal = ({
             <div className='flex flex-col w-full items-start gap-[0.5rem]'>
                 <div className='flex flex-col w-full gap-1'>
                     <span className='text-[#FAFAFA] text-[14px] opacity-75'>Name</span>
-                    <input type="text" value={name} onChange={(e)=>setName(e.target.value)} className='p-2 text-[#FAFAFA] border border-[#FAFAFA]/25 rounded-[10px] focus:outline-none focus:border-[#8cd56a]' />
+                    <input type="text" value={name} onChange={(e)=>{
+                        setName(e.target.value);
+                        setNameError('');
+                    }} className={`p-2 text-[#FAFAFA] border ${nameError ? "border-[#F72B2B]" : "border-[#FAFAFA]/25"} rounded-[10px] focus:outline-none focus:border-[#8cd56a]`}/>
+
+                    <span className='text-[12px] text-center text-[#F72B2B]'>{nameError}</span>
                 </div>
 
                 <div className='flex flex-col w-full gap-1'>
                     <span className='text-[#FAFAFA] text-[14px] opacity-75'>Username</span>
-                    <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)  }
-                    className='p-2 text-[#FAFAFA] border border-[#FAFAFA]/25 rounded-[10px] focus:outline-none focus:border-[#8cd56a]' />
+                    <input type="text" value={username} onChange={(e)=>{
+                        setUsername(e.target.value)
+                        setUsernameError('');
+                    }}
+                    className={`p-2 text-[#FAFAFA] border rounded-[10px] focus:outline-none focus:border-[#8cd56a] ${usernameError ? 'border-[#F72B2B]' : 'border-[#FAFAFA]/25'}`} />
+
+                    <span className='text-[12px] text-center text-[#F72B2B]'>{usernameError}</span>
                 </div>
 
                 <div className='flex flex-col w-full gap-1'>
-                    <span className='text-[#FAFAFA] text-[14px] opacity-75'>Password</span>
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className='p-2 text-[#FAFAFA] border border-[#FAFAFA]/25 rounded-[10px] focus:outline-none focus:border-[#8cd56a]' />
+                    <div className='flex items-center justify-between'>
+                        <span className='text-[#FAFAFA] text-[14px] opacity-75'>Password</span>
+                        <div className='flex items-center gap-1'>
+                            <input type="checkbox" name="show_password" id="show_password" className='cursor-pointer size-3' onChange={()=>setShowPassword(prev=>!prev)}/>
+                            <label htmlFor="show_password" className={`cursor-pointer text-[12px] text-[#FAFAFA]`}>Show</label>
+                        </div>
+                    </div>
+                    <input type={showPassword ? "text" : "password"} value={password} onChange={(e)=>setPassword(e.target.value)} className='p-2 text-[#FAFAFA] border border-[#FAFAFA]/25 rounded-[10px] focus:outline-none focus:border-[#8cd56a]' />
                 </div>
             </div>
 
@@ -126,6 +148,11 @@ export const CreateAccountModal = ({
                 <button onClick={handleSignUp} className='flex items-center justify-center gap-2 bg-[#8cd56a] hover:bg-[#71cb47] active:bg-[#8cd56a] py-3 rounded-[10px] cursor-pointer'>
                     <span className='text-[#141414] text-[16px] font-bold'>{loading ? 'Creating...' : 'Create'}</span>
                 </button>
+
+                <div className='flex items-center justify-center w-full gap-1'>
+                    <span className='text-[#FAFAFA] text-[14px]'>Already have an account?</span>
+                    <button className='text-[#FAFAFA] text-[14px] underline hover:text-[#71cb47] active:text-[#FAFAFA] cursor-pointer'>Login instead</button>
+                </div>
             </div>
         </div>
     )

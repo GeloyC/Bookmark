@@ -16,6 +16,7 @@ const Navigation = ({
   user
 }) => {
 
+  console.log(user);
   const location = useLocation();
 
   const [accountDropdown, setAccountDropdown] = useState(false);
@@ -28,9 +29,15 @@ const Navigation = ({
              */}
             <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className='w-[38px] h-[38px]'/>
             {user ? (
-              <span className='text-[#71cb47] text-[22px] font-bold'>
-                {user.name}'s links
-              </span>
+              user?.username ? (
+                <span className='text-[#71cb47] text-[22px] font-bold'>
+                  {user.username}'s links
+                </span>
+              ) : user?.name && (
+                <span className='text-[#71cb47] text-[22px] font-bold'>
+                  {user.name}'s links
+                </span>
+              )
             ): (
               <span className='text-[#71cb47] text-[22px] font-bold'>
                 Link Saver

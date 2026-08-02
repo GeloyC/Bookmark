@@ -8,6 +8,41 @@ export const userSignUp = async (req, res, next) => {
     try {
         const hashed_password = await bcrypt.hash(password, 10);
 
+        const checkName = await db.oneOrNone(
+            `SELECT EXISTS (
+                SELECT 1
+                FROM users 
+                WHERE name = $1
+            ) AS name_exist`,
+            [ name ]
+        );
+
+        const checkUsername = await db.oneOrNone(
+            `SELECT EXISTS (
+                SELECT 1
+                FROM users
+                WHERE username = $1
+            ) AS username_exist`,
+            [ username ]
+        );
+
+        const errors = {};
+
+        if (checkName?.name_exist) {
+            errors.nameError = 'Name already exists, login instead';
+        }
+
+        if (checkUsername?.username_exist) {
+            errors.usernameError = 'Username already exists';
+        }
+
+        if (Object.keys(errors).length > 0) {
+            return res.status(409).json({
+                success: false,
+                ...errors
+            });
+        }
+
         const newUser = await db.one(
             `INSERT INTO users (
                 name,

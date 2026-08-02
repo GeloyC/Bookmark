@@ -159,11 +159,15 @@ export const AddLinkModal = ({
                     <input type="text" placeholder='Add a link here' value={newLink} onChange={(e)=>{
                         setNewLink(e.target.value);
                         setErrorExistedMessage('');
-                    }} disabled={newTitle} className={`bg-[#252525] p-3 ${newTitle ? 'opacity-50' : 'border border-[#FAFAFA]/25'} ${errorExistedMessage && 'border-[#FF0000]'} rounded-[10px] text-[#FAFAFA] text-[16px] focus:outline-none focus:border-[#8cd56a]`}/>
+                    }} disabled={initialTitle !== null} className={`bg-[#252525] p-3 ${initialTitle !== null ? 'opacity-50' : 'border border-[#FAFAFA]/25'} ${errorExistedMessage && 'border-[#FF0000]'} rounded-[10px] text-[#FAFAFA] text-[16px] focus:outline-none focus:border-[#8cd56a]`}/>
                     
-                    {newTitle && (
+                    {initialTitle !== null && (
                         <div className='flex flex-col w-full gap-1'>
-                            <span className='text-[#FAFAFA] text-[14px] opacity-80'>Edit title</span>
+                            <span className='text-[#FAFAFA] text-[14px] opacity-80'>
+                                {initialTitle === ""
+                                    ? "Couldn't retrieve the title. Please enter one."
+                                    : "Edit title"}
+                            </span>
 
                             <input type="text" 
                             value={newTitle} 
@@ -172,6 +176,7 @@ export const AddLinkModal = ({
                             />
                         </div>
                     )}
+
 
                     {errorExistedMessage && (
                         <span className='text-[#FF0000] text-center text-[16px] leading-none'>{errorExistedMessage}</span>

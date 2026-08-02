@@ -14,7 +14,7 @@ export const getUser = async () => {
 
         return user.data;
     } catch (err) {
-
+        throw err;
     }
 }
 
