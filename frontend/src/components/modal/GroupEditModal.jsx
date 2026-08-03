@@ -13,7 +13,8 @@ export const GroupEditModal = ({
     groupId,
     setSelectedGroupEditModal,
     groupName,
-    setEditToastMessage
+    setEditToastMessage,
+    setSelectedGroup
 }) => {
 
     const [name, setName] = useState(groupName);
@@ -35,6 +36,7 @@ export const GroupEditModal = ({
                 name
             );
 
+            setSelectedGroup(name);
             return response;
         }, onSuccess: (response) => {
             setSelectedGroupEditModal(null);

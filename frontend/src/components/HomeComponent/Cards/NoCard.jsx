@@ -3,14 +3,23 @@
 import Add from '/src/assets/Icons/add.svg?react';
 
 
-export const NoCard = ({ setAddLinkModalOpen }) => {
+export const NoCard = ({ 
+    setAddLinkModalOpen,
+    selectedGroup
+}) => {
 
     return (
-        <div className='flex flex-col items-center justify-center w-full h-[650px] gap-[1rem]'>
-            <span className='text-[#FAFAFA] text-[18px] opacity-50'>There are no saved links yet. Save a link today.</span>
-            <button onClick={() => setAddLinkModalOpen(true)} className='flex items-center border-2 border-dashed border-[#FAFAFA]/25 p-[1rem] rounded-full bg-[#191919] hover:bg-[#252525]/75 active:bg-[#191919] cursor-pointer'>
-                <Add className="w-[30px] h-[30px] opacity-75" />
-                <span className='text-[#FAFAFA] text-[18px] opacity-75 px-[1rem]'>Add Link</span>
+        <div className='fade-in flex flex-col items-center justify-center w-full h-[650px] gap-[1.5rem]'>
+            <div className='flex flex-col justify-center items-center gap-[1rem]'>
+                <span className='text-[#71cb47] text-[24px] leading-none'>'{selectedGroup}' group is empty</span>
+
+                <span className='text-[#FAFAFA]/50 w-[450px] text-center'>
+                    Start by adding a link that relates to the group. Make sure to customize a title for the link, it gives you context later on when you decide to visit it later 
+                </span>
+            </div>
+            <button onClick={() => setAddLinkModalOpen(true)} className='flex items-center p-[0.5rem] rounded-[10px] bg-[#71cb47]/75 hover:bg-[#71cb47] active:bg-[#71cb47]/75 cursor-pointer'>
+                <Add className="size-5" />
+                <span className='text-[#141414] font-[500] text-[16px] px-[0.3rem]'>Add Link</span>
             </button>
         </div>
     )

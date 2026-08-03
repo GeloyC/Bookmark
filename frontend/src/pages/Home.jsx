@@ -72,26 +72,31 @@ const Home = () => {
     const selectedCardToEdit = cards.find(card => card.id === selectedCardEditModal);
     const selectedCardToDelete = cards.find(card => card.id === selectedCardDeleteModal);
 
-    
-
-    
-
 
     return (
         <>
-            <div className={`${groups.length == 0 && cards.length == 0 ? 'flex items-center justify-center h-screen w-full' : 'grid grid-cols-[1fr_4fr] h-full'}  rounded-[15px] gap-[1rem] px-[2rem]`}>
+            <div className={`${groups.length <= 0 ? 'flex items-center justify-center h-screen w-full' : 'grid grid-cols-[1fr_4fr] h-full'}  rounded-[15px] gap-[1rem] px-[2rem]`}>
 
 
-                { groups.length == 0 && cards.length == 0 && (
+                { groups.length == 0 && (
                     <div className='flex items-center gap-[1rem]'>
+
+                        {/* 
+                            TODO:
+
+                            THIS IS THE ONBOARDING BLOCK.
+                            -- GREET THE USER
+                            -- CREATE INSTRUCTION 
+                        */}
+
+
                         <button onClick={() => setGroupModalOpen(true)} className='flex flex-col items-center justify-center bg-[#191919] hover:bg-[#1D1D1D] active:bg-[#191919] cursor-pointer p-[1rem] px-[1.5rem] rounded-[15px] border-2 border-dashed border-[#FAFAFA]/25 gap-[0.5rem]'>
-                            <Folder className="w-[30px] h-[30px] opacity-75"/>
-                            <span className='text-[#FAFAFA]'>Create Group</span>
+                            <Folder className="size-7 opacity-75"/>
+                            <span className='text-[#FAFAFA]'>Create a group</span>
                         </button>
                     </div>
                 )}
 
-                {/* TABS of category */}
                 {groups.length > 0 && (
                     <GroupWrapper 
                         user={user}
@@ -110,13 +115,9 @@ const Home = () => {
                     </GroupWrapper>
                 )}
 
-                <div className={`flex flex-col w-full h-full items-center justify-center rounded-[10px]`}>
-                    {/* Show this if user has not created anything yet */}
-                    {cards.length == 0 && !selectedGroup ? (
-                        <div className='flex flex-col items-center justify-center w-full min-h-[700px]'>
-                            <span className='text-[#FAFAFA]'>Select ka muna tols</span>    
-                        </div>
-                    ) : (
+                {selectedGroup && (
+                    <div className={`flex flex-col w-full h-full items-center justify-center rounded-[10px]`}>
+                        {/* Show this if user has not created anything yet */}
                         <LinkWrapper 
                             cards={cards}
                             setOpenAddLinkModal={setAddLinkModalOpen}
@@ -134,11 +135,12 @@ const Home = () => {
                             ):(
                                 <NoCard 
                                     setAddLinkModalOpen={setAddLinkModalOpen}
+                                    selectedGroup={selectedGroup}
                                 />
                             )}
                         </LinkWrapper>
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
 
             {groupModalOpen && (
@@ -174,6 +176,7 @@ const Home = () => {
                         groupName={selectedGroupToEdit?.name}
                         setSelectedGroupEditModal={setSelectedGroupEditModal}
                         setEditToastMessage={setEditToastMessage}
+                        setSelectedGroup={setSelectedGroup}
                     />
                 </div>
             )}

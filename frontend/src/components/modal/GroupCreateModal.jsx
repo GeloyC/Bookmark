@@ -42,7 +42,7 @@ export const GroupCreateModal = ({
     return (
         <div className={`modal-in flex flex-col items-start w-[500px] bg-[#191919] p-[2rem] pb-[1.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem] ${createGroupMutation.isPending && 'opacity-50'}`}>
             <div className="flex flex-col items-start w-full gap-3">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Create a new Group</span>
+                <span className="text-[#FAFAFA] text-[24px] font-bold">New Group</span>
                 {/* <button onClick={() => setCloseModal(false)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                     <Close className="w-[20px] h-[20px]" />
                 </button> */}

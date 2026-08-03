@@ -27,7 +27,7 @@ export const GroupWrapper = ({
                     </button>
                 </div>
                 
-                <div className='flex flex-col w-full max-h-[700px] overflow-y-auto overflow-x-hidden thin-scrollbar gap-1'>
+                <div className='flex flex-col w-full max-h-[700px] overflow-y-auto overflow-x-hidden thin-scrollbar gap-1.5'>
                     {children}
                 </div>
             </div>

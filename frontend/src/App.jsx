@@ -17,7 +17,7 @@ function App() {
   const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 
   return (
-      <div className="relative flex flex-col w-full h-screen">
+      <div className="relative flex flex-col w-full h-screen overflow-y-auto thin-scrollbar">
         <Navigation 
           setLoginModalOpen={setLoginModalOpen}
           setCreateAccountModalOpen={setCreateAccountModalOpen}
@@ -36,6 +36,7 @@ function App() {
           <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
               <LoginModal
                   setCloseModal={setLoginModalOpen}
+                  setCreateAccountModalOpen={setCreateAccountModalOpen}
               />
           </div>
         )}
@@ -44,6 +45,7 @@ function App() {
           <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
               <CreateAccountModal
                   setCloseModal={setCreateAccountModalOpen}
+                  setLoginModalOpen={setLoginModalOpen}
               />
           </div>
         )}

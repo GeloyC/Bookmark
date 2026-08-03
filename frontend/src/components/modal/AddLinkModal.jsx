@@ -113,7 +113,7 @@ export const AddLinkModal = ({
             // closes the modal - with animation
             handleClose();
 
-            setToastMessage(`New link added to ${selectedGroup}`);
+            setToastMessage(`New Link Added`);
             setTimeout(()=>{setToastMessage(null);}, 3000);
             
         }
@@ -145,7 +145,7 @@ export const AddLinkModal = ({
         onAnimationEnd={()=>handleAnimationEnd()}>
 
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Save a link to <strong className='text-[#71cb47]'>{selectedGroup}</strong></span>
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Save New link to <strong className='text-[#71cb47]'>{selectedGroup}</strong></span>
                 <button onClick={handleClose} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                     <Close className="w-[20px] h-[20px]" />
                 </button>
@@ -163,7 +163,7 @@ export const AddLinkModal = ({
                     
                     {initialTitle !== null && (
                         <div className='flex flex-col w-full gap-1'>
-                            <span className='text-[#FAFAFA] text-[14px] opacity-80'>
+                            <span className='text-[#71cb47] text-[14px] opacity-80'>
                                 {initialTitle === ""
                                     ? "Couldn't retrieve the title. Please enter one."
                                     : "Edit title"}
@@ -209,10 +209,10 @@ export const AddLinkModal = ({
                         title: newTitle
                     })}
                         className='w-full text-center p-3 rounded-[15px] bg-[#71cb47] hover:bg-[#8cd56a] active:bg-[#71cb47] cursor-pointer'>
-                        <span className='text-[#141414]'>{handleUpdateNewLink.isPending ? 'Finishing...' : 'Done'}</span>
+                        <span className='text-[#141414]'>{handleUpdateNewLink.isPending ? 'Saving...' : 'Save'}</span>
                     </button>
                     <button onClick={() => handleUndoSavedLink.mutate(linkId)} className='w-full text-center p-3 rounded-[15px] bg-[#252525]/50 hover:bg-[#252525] active:bg-[#252525]/50 cursor-pointer'>
-                        <span className='text-[#FAFAFA]'>Undo</span>
+                        <span className='text-[#FAFAFA]'>Cancel</span>
                     </button>
                 </div>
             )}

@@ -7,7 +7,8 @@ import Close from '/src/assets/Icons/close.svg?react';
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const LoginModal = ({
-    setCloseModal
+    setCloseModal,
+    setCreateAccountModalOpen
 }) => {
 
     const [username, setUsername] = useState('');
@@ -54,13 +55,22 @@ export const LoginModal = ({
             </div>
 
             <div className='flex flex-col w-full gap-2'>
-                <button onClick={loginUser} className='flex items-center justify-center gap-2 bg-[#8cd56a] hover:bg-[#71cb47] active:bg-[#8cd56a] py-3 rounded-[10px] cursor-pointer'>
+                <button onClick={loginUser} className='flex items-center justify-center gap-2 bg-[#71cb47] hover:bg-[#8cd56a] active:bg-[#71cb47] py-3 rounded-[10px] cursor-pointer'>
                     <span className='text-[#141414] text-[16px] font-bold'>Continue</span>
                 </button>
 
-                <button onClick={() => setCloseModal(false)} className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#252525]/50 active:bg-[#252525] py-3 rounded-[10px] cursor-pointer'>
+                {/* <button onClick={() => setCloseModal(false)} className='flex items-center justify-center gap-2 bg-[#252525] hover:bg-[#252525]/50 active:bg-[#252525] py-3 rounded-[10px] cursor-pointer'>
                     <span className='text-[#FAFAFA]'>Cancel</span>
-                </button>
+                </button> */}
+
+                <div className='flex items-center justify-center w-full gap-2'>
+                    <button onClick={()=>{
+                        setCloseModal(false);
+                        setCreateAccountModalOpen(true);
+                    }} className='text-[#FAFAFA] hover:text-[#71cb47] active:text-[#FAFAFA] text-[14px] cursor-pointer underline'>
+                        Login Instead
+                    </button>
+                </div>
             </div>
         </div>
     )

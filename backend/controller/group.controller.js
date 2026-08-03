@@ -40,7 +40,6 @@ export const createGroup = async (req, res, next) => {
             data: newGroup.name 
         });
 
-
     } catch (err) {
         next(err);
     }

@@ -7,7 +7,8 @@ import Check from '/src/assets/Icons/check.svg?react'
 
 
 export const CreateAccountModal = ({
-    setCloseModal 
+    setCloseModal,
+    setLoginModalOpen
 }) => {
 
     const [name, setName] = useState('');
@@ -15,6 +16,7 @@ export const CreateAccountModal = ({
     const [password, setPassword] = useState('');
 
     const [showPassword, setShowPassword] = useState(false);
+
 
     const [success, setSuccess] = useState('');
     const [accountCreated, setAccountCreated] = useState(false);
@@ -151,7 +153,10 @@ export const CreateAccountModal = ({
 
                 <div className='flex items-center justify-center w-full gap-1'>
                     <span className='text-[#FAFAFA] text-[14px]'>Already have an account?</span>
-                    <button className='text-[#FAFAFA] text-[14px] underline hover:text-[#71cb47] active:text-[#FAFAFA] cursor-pointer'>Login instead</button>
+                    <button onClick={()=>{
+                        setLoginModalOpen(true);
+                        setCloseModal(false);
+                    }} className='text-[#71cb47] text-[14px] underline hover:text-[#71cb47]/75 active:text-[#71cb47] cursor-pointer'>Login instead</button>
                 </div>
             </div>
         </div>
