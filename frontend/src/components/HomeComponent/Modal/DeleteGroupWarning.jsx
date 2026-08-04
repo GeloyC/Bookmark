@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 // service
-import { deleteGroupByID } from '../../lib/group.service';
+import { deleteGroupByID } from '../../../lib/group.service';
 
 // icons
 import Close from '/src/assets/Icons/close.svg?react';

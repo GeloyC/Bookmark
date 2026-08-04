@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 
 // icon
 import Close from '/src/assets/Icons/close.svg?react';
-import { editGroupName } from "../../lib/group.service";
+import { editGroupName } from "../../../lib/group.service";
 
 // service
 

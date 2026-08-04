@@ -3,13 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 // icon
 import Close from '/src/assets/Icons/close.svg?react';
-import { updateLinkTitle } from "../../lib/card.service.js";
+import { updateLinkTitle } from "../../../lib/card.service.js";
 
 
 export const CardEditModal = ({
     cardId,
     cardTitle,
-    setSelectedCardEditModal,
+    closeModal,
     setEditToastMessage
 }) => {
 
@@ -48,12 +48,12 @@ export const CardEditModal = ({
 
 
     return (
-        <div className="flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
+        <div className="modal-in flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to rename the title '{cardTitle.split('').splice(0,40)}...' ?</span>
-                <button onClick={()=>setSelectedCardEditModal(null)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to rename the title '{cardTitle?.split('').splice(0,40)}...' ?</span>
+                {/* <button onClick={closeModal} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                     <Close className="w-[20px] h-[20px]" />
-                </button>
+                </button> */}
             </div>
 
             <span className="text-[#FAFAFA] opacity-75">
@@ -78,7 +78,7 @@ export const CardEditModal = ({
                     <span className="text-[#141414]">Save</span>
                 </button>
 
-                <button onClick={()=>setSelectedCardEditModal(null)} className="bg-[#252525]/75 py-3 hover:bg-[#252525] active:bg-[#252525]/75 w-full rounded-[10px] cursor-pointer">
+                <button onClick={closeModal} className="bg-[#252525]/75 py-3 hover:bg-[#252525] active:bg-[#252525]/75 w-full rounded-[10px] cursor-pointer">
                     <span className="text-[#FAFAFA]">Cancel</span>
                 </button>
             </div>

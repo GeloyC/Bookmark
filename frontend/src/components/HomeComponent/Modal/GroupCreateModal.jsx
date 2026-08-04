@@ -1,19 +1,16 @@
-import { useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
-import axios from 'axios';
+import { useMutation, useQueryClient, QueryClient } from '@tanstack/react-query';
 
+// icon
 import Close from '/src/assets/Icons/close.svg?react';
 
-// config
-import { BASE_URL } from '../../config/api.js';
-
-
-import { createGroup } from '../../lib/group.service.js';
+// service
+import { createGroup } from '../../../lib/group.service.js';
 
 
 export const GroupCreateModal = ({
-    setCloseModal,
-    user,
+    userId,
+    closeModal, 
     setToastMessage
 }) =>{
 
@@ -23,10 +20,10 @@ export const GroupCreateModal = ({
     const queryClient = useQueryClient();
 
     const createGroupMutation = useMutation({
-        mutationFn: () => createGroup( user.id,groupName),
+        mutationFn: () => createGroup( userId,groupName),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['groups', user.id]
+                queryKey: ['groups', userId]
             });
             setGroupName('');
             setCloseModal(false);
@@ -58,7 +55,7 @@ export const GroupCreateModal = ({
                     <button onClick={() => createGroupMutation.mutate()} disabled={createGroupMutation.isPending} className='w-full py-[0.5rem] rounded-[10px] bg-[#8cd56a] hover:bg-[#A8DF8E] active:bg-[#8cd56a] cursor-pointer'>
                         <span className='text-center text-[16px] text-[#191919] font-bold'>{createGroupMutation.isPending ? 'Creating...' : 'Create'}</span>
                     </button>
-                    <button onClick={() => setCloseModal(false)} className='w-full py-[0.5rem] rounded-[10px] bg-[#191919] hover:bg-[#252525] active:bg-[#191919] cursor-pointer'>
+                    <button onClick={closeModal} className='w-full py-[0.5rem] rounded-[10px] bg-[#191919] hover:bg-[#252525] active:bg-[#191919] cursor-pointer'>
                         <span className='text-center text-[16px] text-[#FAFAFA] font-bold'>Cancel</span>
                     </button>
                 </div>

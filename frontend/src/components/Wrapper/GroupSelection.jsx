@@ -4,8 +4,8 @@ import { GroupItem } from "../HomeComponent/Button/GroupItem";
 
 export const GroupSelectection = ({
     groups, 
-    selectedGroup,
-    setSelectedGroup,
+    setChosenGroup,
+    groupSelected,
     setSelectedGroupId
 }) => {
 
@@ -15,7 +15,7 @@ export const GroupSelectection = ({
         <div className="flex items-center z-10">
             <div className="relative flex gap-2">
                 <GroupSelectButton
-                    selectedGroup={selectedGroup}
+                    groupName={groupSelected?.name}
                     setIsOpen={setIsOpen}
                     isOpen={isOpen}
                 />
@@ -26,7 +26,7 @@ export const GroupSelectection = ({
                             <GroupItem key={group.id}
                                 group={group}
                                 onClick={() => {
-                                    setSelectedGroup(group.name);
+                                    setChosenGroup(group.id);
                                     setSelectedGroupId(group.id);
                                     setIsOpen(open => !open)
                                 }}

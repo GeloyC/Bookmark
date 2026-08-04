@@ -10,11 +10,10 @@ import Add from '/src/assets/Icons/add.svg?react';
 
 
 // components
-import { GroupCreateModal } from '../components/modal/GroupCreateModal';
+import { GroupCreateModal } from '../components/HomeComponent/Modal/GroupCreateModal';
 import { GroupWrapper } from '../components/Wrapper/GroupWrapper';
-import { LinkWrapper } from '../components/HomeComponent/LinkWrapper';
-import { AddLinkModal } from '../components/modal/AddLinkModal';
-import { Group } from '../components/HomeComponent/Group/Group';
+import { LinkWrapper } from '../components/Wrapper/LinkWrapper';
+import { AddLinkModal } from '../components/HomeComponent/Modal/AddLinkModal';
 import { Card } from '../components/HomeComponent/Cards/Card';
 import { NoCard } from '../components/HomeComponent/Cards/NoCard';
 import { TopBar } from '../components/Wrapper/TopBar';
@@ -31,25 +30,30 @@ import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
 
 // components
-import { GroupEditModal } from '../components/modal/GroupEditModal';
-import { CardEditModal } from '../components/modal/CardEditModal';
-import { DeleteGroupWarning } from '../components/modal/DeleteGroupWarning';
-import { DeleteCardWarning } from '../components/modal/DeleteCardWarning';
+import { GroupEditModal } from '../components/HomeComponent/Modal/GroupEditModal';
+import { CardEditModal } from '../components/HomeComponent/Modal/CardEditModal';
+import { DeleteGroupWarning } from '../components/HomeComponent/Modal/DeleteGroupWarning';
+import { DeleteCardWarning } from '../components/HomeComponent/Modal/DeleteCardWarning';
 import { Toast } from '../components/Toast/Toast';
 import { DeleteToast } from '../components/Toast/DeleteToast';
 import { EditToast } from '../components/Toast/EditToast';
 import { GroupSettings } from '../components/Wrapper/GroupSettings';
+import { ModalWrapper } from '../components/Wrapper/ModalWrapper';
 
 
 const Home = () => {
 
     const user = useUserContext();
 
+
     const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
     const [createLinkModalOpen, setCreateLinkModalOpen] = useState(false);
     const [manageGroupModalOpen, setManageGroupModalOpen] = useState(false);
+
     
     const [selectedGroup, setSelectedGroup] = useState(null);
+    const [chosenGroup, setChosenGroup] = useState(null);
+
     const [selectedGroupId, setSelectedGroupId] = useState(null);
 
     const [selectedGroupEditModal, setSelectedGroupEditModal] = useState(null);
@@ -68,8 +72,14 @@ const Home = () => {
         queryFn: () => getGroupsById(user.id)
     });
 
+
+
     const selectedGroupToEdit = groups.find(g =>  g.id === selectedGroupEditModal);
     const selectedGroupToDelete = groups.find(group => group.id === selectedGroupDeleteModal);
+
+    const groupSelected = groups.find(group => {
+        return group.id === chosenGroup
+    });
 
 
     const { data: cards = [], isLoading:isCardsLoading } = useQuery({
@@ -86,98 +96,88 @@ const Home = () => {
         <>
             <div className="flex flex-col items-center justify-start h-screen w-full gap-[1rem] px-[12rem]">
 
-                {/* {groups.length > 0 && (
-                    <GroupWrapper 
-                        user={user}
-                        setGroupModalOpen={setGroupModalOpen}
-                    >
-                        {groups.map(group => (
-                            <Group key={group.id}
-                                group={group}
-                                selectedGroup={selectedGroup}
-                                setSelectedGroup={setSelectedGroup}
-                                setSelectedGroupId={setSelectedGroupId}
-                                setSelectedGroupEditModal={setSelectedGroupEditModal}
-                                setSelectedGroupDeleteModal={setSelectedGroupDeleteModal}
-                            />
-                        ))}
-                    </GroupWrapper>
-                )} */}
 
-                    {groups.length > 0 && (
-                        <TopBar>
-                            <GroupSelectection 
-                                setSelectedGroup={setSelectedGroup}
-                                setSelectedGroupId={setSelectedGroupId}
-                                selectedGroup={selectedGroup}
-                                groups={groups}
+                {groups.length > 0 && (
+                    <TopBar>
+                        <GroupSelectection 
+                            setSelectedGroupId={setSelectedGroupId}
+                            setChosenGroup={setChosenGroup}
+                            groupSelected={groupSelected}
+                            selectedGroup={selectedGroup}
+                            groups={groups}
+                        />
+
+                        <div className='flex items-center gap-2'>
+                            <GroupSettings
+                                setCreateGroupModalOpen={setCreateGroupModalOpen}
+                                setManageGroupModalOpen={setManageGroupModalOpen}
                             />
 
-                            <div className='flex items-center gap-2'>
-                                <GroupSettings
-                                    setCreateGroupModalOpen={setCreateGroupModalOpen}
-                                    setManageGroupModalOpen={setManageGroupModalOpen}
+                            {chosenGroup && (
+                                <CreateLinkButton 
+                                    setCreateLinkModalOpen={setCreateLinkModalOpen}
                                 />
+                            )}
+                        </div>
+                    </TopBar>
+                )}
+            
 
-                                {selectedGroup && (
-                                    <CreateLinkButton 
-                                        setCreateLinkModalOpen={setCreateLinkModalOpen}
-                                    />
-                                )}
-                            </div>
-                        </TopBar>
+                <LinkWrapper 
+                    cards={cards}
+                    setCreateLinkModalOpen={setCreateLinkModalOpen}
+                    groupName={groupSelected?.name}
+                    isCardsLoading={isCardsLoading}
+                >
+                    {chosenGroup && cards.length >= 1 ? (
+                        cards.map(card => (
+                            <Card key={card.id}
+                                card={card}
+                                setSelectedCardEditModal={setSelectedCardEditModal}
+                                setSelectedCardDeleteModal={setSelectedCardDeleteModal}
+                            />
+                        ))
+                    ):(
+                        <NoCard 
+                            setCreateLinkModalOpen={setCreateLinkModalOpen}
+                            selectedGroup={selectedGroup}
+                        />
                     )}
-                
-
-                    <LinkWrapper 
-                        cards={cards}
-                        setCreateLinkModalOpen={setCreateLinkModalOpen}
-                        selectedGroup={selectedGroup}
-                        isCardsLoading={isCardsLoading}
-                    >
-                        {selectedGroup && cards.length >= 1 ? (
-                            cards.map(card => (
-                                <Card key={card.id}
-                                    card={card}
-                                    setSelectedCardEditModal={setSelectedCardEditModal}
-                                    setSelectedCardDeleteModal={setSelectedCardDeleteModal}
-                                />
-                            ))
-                        ):(
-                            <NoCard 
-                                setCreateLinkModalOpen={setCreateLinkModalOpen}
-                                selectedGroup={selectedGroup}
-                            />
-                        )}
-                    </LinkWrapper>
-                
+                </LinkWrapper>
             </div>
 
-            {createGroupModalOpen && (
-                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-                    <GroupCreateModal
-                        // add a close function here to close the modal
-                        setCloseModal={setCreateGroupModalOpen}
-                        user={user}
-                        setToastMessage={setToastMessage}
-                    />
-                </div>
-            )}
+            <ModalWrapper
+                user={user}
+                groupIdSelected={groupSelected?.id}
+                groupNameSelected={groupSelected?.name}
 
-            {createLinkModalOpen && (
-                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-                    <AddLinkModal
-                        // add a close function here to close the modal
-                        setCloseModal={setCreateLinkModalOpen}
-                        user={user}
-                        selectedGroup={selectedGroup}
-                        groupId={selectedGroupId}
-                        setToastMessage={setToastMessage}
-                    />
-                </div>
-            )}
+                // props for group
+                createGroupModalOpen={createGroupModalOpen}
+                setCreateGroupModalOpen={setCreateGroupModalOpen}
 
-            {selectedGroupEditModal &&  (
+                // props for card
+                createLinkModalOpen={createLinkModalOpen}
+                setCreateLinkModalOpen={setCreateLinkModalOpen}
+
+                cardIdEdit={selectedCardToEdit?.id}
+                cardTitleEdit={selectedCardToEdit?.title}
+                selectedCardEditModal={selectedCardEditModal}
+                setSelectedCardEditModal={setSelectedCardEditModal}
+
+                cardIdDelete={selectedCardToDelete?.id}
+                cardTitleDelete={selectedCardToDelete?.title}
+                selectedCardDeleteModal={selectedCardDeleteModal}
+                setSelectedCardDeleteModal={setSelectedCardDeleteModal}
+                setDeleteToastMessage={setDeleteToastMessage}
+
+                // toast
+                setToastMessage={setToastMessage}
+                setEditToastMessage={setEditToastMessage}
+                setDeleteToastMessage={setDeleteToastMessage}
+            />
+
+
+            {/* {selectedGroupEditModal &&  (
                 <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
                     <GroupEditModal
                         // add a close function here to close the modal
@@ -204,30 +204,10 @@ const Home = () => {
                         setDeleteToastMessage={setDeleteToastMessage}
                     />
                 </div>
-            )}
+            )} */}
 
-            {selectedCardEditModal && (
-                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-                    <CardEditModal 
-                        cardId={selectedCardToEdit?.id}
-                        cardTitle={selectedCardToEdit?.title}
-                        setSelectedCardEditModal={setSelectedCardEditModal}
-                        setEditToastMessage={setEditToastMessage}
-                    />
-                </div>
-            )}
 
-            {selectedCardDeleteModal && (
-                <div className='absolute inset-0 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-                    <DeleteCardWarning 
-                        userId={user.id}
-                        cardId={selectedCardToDelete?.id}
-                        cardTitle={selectedCardToDelete?.title}
-                        setSelectedCardDeleteModal={setSelectedCardDeleteModal}
-                        setDeleteToastMessage={setDeleteToastMessage}
-                    />
-                </div>
-            )}
+
 
             {toastMessage && ( 
                 <div className='fixed bottom-6 right-6'>

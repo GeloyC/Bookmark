@@ -7,13 +7,13 @@ import Close from '/src/assets/Icons/close.svg?react';
 import ArrowDown from '/src/assets/Icons/arrow-down.svg?react';
 
 // service
-import { createNewLink, deleteSelectedCard, updateLinkTitle } from '../../lib/card.service.js';
+import { createNewLink, deleteSelectedCard, updateLinkTitle } from '../../../lib/card.service.js';
 
 
 export const AddLinkModal = ({
-    setCloseModal,
-    user,
-    selectedGroup,
+    userId,
+    closeModal,
+    groupName,
     groupId,
     setToastMessage
 }) => {
@@ -24,16 +24,12 @@ export const AddLinkModal = ({
     const [errorExistedMessage, setErrorExistedMessage] = useState('');
 
     const handleClose = () => {
-        console.log("handleClose");
         setIsClosing(true);
     };
 
     const handleAnimationEnd = () => {
-        console.log("animation end", isClosing);
-
         if (isClosing) {
-            console.log("closing modal");
-            setCloseModal(false);
+            closeModal();
         }
     };
 
@@ -52,9 +48,9 @@ export const AddLinkModal = ({
 
     const handleCreateNewLink = useMutation({
         mutationFn: async({ 
-            card_holder_id,
-            group_name,
-            group_id,
+            card_holder_id,  // asks for user_id
+            group_name, 
+            group_id, 
             link
         }) => {
             const response = await createNewLink(
@@ -78,7 +74,6 @@ export const AddLinkModal = ({
 
         }, 
         onError: (err) => {
-            console.log('Error message', err.response?.data.message);
             setErrorExistedMessage(err.response?.data.message)
         }
     });
@@ -104,7 +99,7 @@ export const AddLinkModal = ({
         },
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['groups', user.id]
+                queryKey: ['groups', userId]
             });
             queryClient.invalidateQueries({
                 queryKey: ['cards']
@@ -138,7 +133,6 @@ export const AddLinkModal = ({
     });
 
 
-    console.log('selectedGroup: ', selectedGroup);
 
 
     return (
@@ -146,7 +140,7 @@ export const AddLinkModal = ({
         onAnimationEnd={()=>handleAnimationEnd()}>
 
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Save New link to <strong className='text-[#71cb47]'>{selectedGroup}</strong></span>
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Save New link to <strong className='text-[#71cb47]'>{groupName}</strong></span>
                 <button onClick={handleClose} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                     <Close className="w-[20px] h-[20px]" />
                 </button>
@@ -191,8 +185,8 @@ export const AddLinkModal = ({
                     
                     <button 
                         onClick={() => handleCreateNewLink.mutate({
-                            card_holder_id: user.id,
-                            group_name: selectedGroup,
+                            card_holder_id: userId,
+                            group_name: groupName,
                             group_id: groupId,
                             link: newLink
                         })} disabled={handleCreateNewLink.isPending}

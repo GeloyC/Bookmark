@@ -25,11 +25,17 @@ export const GroupSettings = ({
             {isOpen && (
                 <div className="fade-in absolute top-10 right-0 flex flex-col gap-2 p-2 w-auto bg-[#141414] rounded-[10px] border border-[#FAFAFA]/10">
                     <CreateGroupButton 
-                        setCreateGroupModalOpen={setCreateGroupModalOpen}
+                        onClick={()=> {
+                            setCreateGroupModalOpen(true);
+                            setIsOpen(false);
+                        }}
                     />
 
                     <ManageGroupButton 
-                        setManageGroupModalOpen={setManageGroupModalOpen}
+                        onClick={()=> {
+                            setManageGroupModalOpen(true);
+                            setIsOpen(false);
+                        }}
                     />
                 </div>
             )}

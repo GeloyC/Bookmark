@@ -2,13 +2,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 
 // service
-import { deleteSelectedCard } from "../../lib/card.service";
+import { deleteSelectedCard } from "../../../lib/card.service";
 
 export const DeleteCardWarning = ({
     userId,
     cardId,
     cardTitle,
-    setSelectedCardDeleteModal,
+    closeModal,
     setDeleteToastMessage
 }) => {
     
@@ -19,7 +19,7 @@ export const DeleteCardWarning = ({
             console.log('Selected ID: ', id);
             await deleteSelectedCard(id);
         }, onSuccess: () => {
-            setSelectedCardDeleteModal(null);
+            closeModal();
 
             queryClient.invalidateQueries({
                 queryKey: ['cards']
@@ -33,6 +33,8 @@ export const DeleteCardWarning = ({
         }
     })
 
+    console.log('cardId: ', cardId);
+
     return (
         <div className="modal-in flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
             <div className="flex items-center w-full">
@@ -44,7 +46,7 @@ export const DeleteCardWarning = ({
                     <span className='text-[#FAFAFA]'>Delete</span>
                 </button>
 
-                <button onClick={()=>setSelectedCardDeleteModal(null)} className='bg-[#252525]/75 hover:bg-[#252525] active:bg-[#252525]/75 py-3 rounded-[10px] w-full cursor-pointer'>
+                <button onClick={closeModal} className='bg-[#252525]/75 hover:bg-[#252525] active:bg-[#252525]/75 py-3 rounded-[10px] w-full cursor-pointer'>
                     <span className='text-[#FAFAFA]'>Cancel</span>
                 </button>
             </div>
