@@ -29,7 +29,7 @@ export const userSignUp = async (req, res, next) => {
         const errors = {};
 
         if (checkName?.name_exist) {
-            errors.nameError = 'Name already exists, login instead';
+            errors.nameError = 'Name already exists';
         }
 
         if (checkUsername?.username_exist) {

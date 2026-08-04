@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // icons
 import Close from '/src/assets/Icons/close.svg?react';
-import Check from '/src/assets/Icons/check.svg?react'
+import Logo from '/src/assets/logo/link_saver_logo.png'
 
 
 export const CreateAccountModal = ({
@@ -60,6 +60,8 @@ export const CreateAccountModal = ({
                 password: password
             }
 
+            console.log('Payload: ', payload);
+
             const response = await axios.post(
                 `http://localhost:5000/user/v1/signup`, 
                 payload, 
@@ -87,23 +89,24 @@ export const CreateAccountModal = ({
 
     if (accountCreated) {
         return (
-            <div className='relative flex flex-col items-center justify-center w-[500px] h-auto bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]'>
-                <button onClick={() => setCloseModal(false)} className='absolute top-5 right-5 flex items-center justify-center cursor-pointer'>
-                    <Close className="w-[20px] h-[20px]" />
-                </button>
+            <div className='modal-in relative flex flex-col items-center justify-center w-[400px] h-auto bg-[#191919] p-[2rem] py-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]'>
 
-                <Check className="w-[75px] h-[75px] rounded-full border border-[#8cd56a]/50 p-4" />
+                <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className="size-10 rounded-full border border-[#8cd56a]/50 p-2" />
 
-                <span className='text-[22px] text-[#FAFAFA]'>Account successfully Created!</span>
+                <div className='flex flex-col items-center w-full gap-[0.5rem]'>
+                    <span className='text-[#71cb47] text-[24px] font-bold leading-none'>Thank you for signing up!</span>
 
-                <span className='text-[#FAFAFA]'>{count}</span>
+                    <span className='text-[16px] text-[#FAFAFA] opacity-75 text-center'>Your account is successfully created. You will be redirected in just a moment.</span>
+                </div>
+
+                {/* <span className='text-[#FAFAFA]'>{count}</span> */}
             </div>
         )
     }
 
 
     return (
-        <div role='dialog' className="relative modal-in flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]">
+        <div className="relative modal-in flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]">
             <button onClick={() => setCloseModal(false)} className="absolute top-3 right-3 cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
                 <Close className="w-[20px] h-[20px]" />
             </button>

@@ -7,7 +7,7 @@ import Edit from '/src/assets/Icons/edit.svg?react';
 
 // service
 import { deleteGroupByID } from '../../lib/group.service';
-import { Group } from './Group/Group';
+import { Group } from '../HomeComponent/Group/Group';
 
 export const GroupWrapper = ({
     user, // passed from useUserContext from /Home.jsx

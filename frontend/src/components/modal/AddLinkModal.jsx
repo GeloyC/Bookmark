@@ -138,6 +138,7 @@ export const AddLinkModal = ({
     });
 
 
+    console.log('selectedGroup: ', selectedGroup);
 
 
     return (

@@ -13,6 +13,7 @@ export const LoginModal = ({
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [passwordShow, setPasswordShow] = useState(false);
 
     const loginUser = async () => {
         try {
@@ -33,6 +34,8 @@ export const LoginModal = ({
         }
     }
 
+
+
     return (
         <div className="modal-in flex flex-col items-start w-[400px] h-auto bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]" >
             <div className="flex items-center justify-between w-full">
@@ -49,8 +52,19 @@ export const LoginModal = ({
                 </div>
 
                 <div className='flex flex-col w-full item-start gap-1'>
-                    <span className='text-[#FAFAFA] text-[14px]'>Password</span>
-                    <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} className='p-[0.5rem] text-[#FAFAFA] rounded-[10px] bg-[#252525 ] focus:outline-none border border-[#FAFAFA]/25 focus:border-[#8cd56a]' />
+                    <div className='flex justify-between items-center w-full'>
+                        <span className='text-[#FAFAFA] text-[14px]'>Password</span>
+
+                        <div className='flex items-center gap-1'>
+                            <input type="checkbox" name='password_show' id='password_show' className='size-3 cursor-pointer' onChange={()=>setPasswordShow(prev => !prev)}/>
+                            <label htmlFor="password_show"
+                            className='text-[#FAFAFA] cursor-pointer text-[14px]' 
+                            >
+                                Show
+                            </label>
+                        </div>
+                    </div>
+                    <input type={passwordShow ? "text" : "password"} value={password} onChange={(e)=>setPassword(e.target.value)} className='p-[0.5rem] text-[#FAFAFA] rounded-[10px] bg-[#252525 ] focus:outline-none border border-[#FAFAFA]/25 focus:border-[#8cd56a]' />
                 </div>
             </div>
 
@@ -64,11 +78,12 @@ export const LoginModal = ({
                 </button> */}
 
                 <div className='flex items-center justify-center w-full gap-2'>
+                    <span className='text-[#FAFAFA] text-[14px]'>Don't have an account yet?</span>
                     <button onClick={()=>{
                         setCloseModal(false);
                         setCreateAccountModalOpen(true);
-                    }} className='text-[#FAFAFA] hover:text-[#71cb47] active:text-[#FAFAFA] text-[14px] cursor-pointer underline'>
-                        Login Instead
+                    }} className='text-[#71cb47] hover:text-[#71cb47]/75 active:text-[#71cb47] text-[14px] cursor-pointer underline'>
+                        Register instead
                     </button>
                 </div>
             </div>

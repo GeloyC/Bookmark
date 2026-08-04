@@ -26,7 +26,7 @@ export const GroupCreateModal = ({
         mutationFn: () => createGroup( user.id,groupName),
         onSuccess: () => {
             queryClient.invalidateQueries({
-                queryKey: ['groups']
+                queryKey: ['groups', user.id]
             });
             setGroupName('');
             setCloseModal(false);
@@ -40,17 +40,8 @@ export const GroupCreateModal = ({
 
     
     return (
-        <div className={`modal-in flex flex-col items-start w-[500px] bg-[#191919] p-[2rem] pb-[1.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem] ${createGroupMutation.isPending && 'opacity-50'}`}>
-            <div className="flex flex-col items-start w-full gap-3">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">New Group</span>
-                {/* <button onClick={() => setCloseModal(false)} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
-                    <Close className="w-[20px] h-[20px]" />
-                </button> */}
-
-                <span className='text-[#FAFAFA] opacity-50'>
-                    Name your group that best fit to the links you'll add later.
-                </span>
-            </div>
+        <div className={`modal-in flex flex-col items-start w-[500px] bg-[#191919] p-[2rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1.5rem] ${createGroupMutation.isPending && 'opacity-50'}`}>
+            <span className="text-[#FAFAFA] text-[24px] font-bold leading-none">New Group</span>
 
             <div className='flex flex-col w-full items-center justify-center gap-[1rem]'>
                 <input type="text" placeholder='Ex. YouTube Links' value={groupName} onChange={(e)=>{
