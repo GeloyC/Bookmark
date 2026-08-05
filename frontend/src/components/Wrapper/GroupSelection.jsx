@@ -6,7 +6,6 @@ export const GroupSelectection = ({
     groups, 
     setChosenGroup,
     groupSelected,
-    setSelectedGroupId
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +26,6 @@ export const GroupSelectection = ({
                                 group={group}
                                 onClick={() => {
                                     setChosenGroup(group.id);
-                                    setSelectedGroupId(group.id);
                                     setIsOpen(open => !open)
                                 }}
                             />

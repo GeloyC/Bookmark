@@ -4,7 +4,6 @@ import { GroupsLoading } from '../HomeComponent/Group/GroupsLoading';
 
 export const LinkWrapper = ({
     cards,
-    setOpenAddLinkModal,
     groupName,
     isCardsLoading,
     children

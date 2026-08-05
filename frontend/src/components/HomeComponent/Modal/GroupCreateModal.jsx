@@ -26,7 +26,7 @@ export const GroupCreateModal = ({
                 queryKey: ['groups', userId]
             });
             setGroupName('');
-            setCloseModal(false);
+            closeModal();
             setToastMessage('Group created successfuly!')
             setTimeout(() => setToastMessage(null), 3000);
         }, 

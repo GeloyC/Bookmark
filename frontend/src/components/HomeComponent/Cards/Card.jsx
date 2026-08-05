@@ -15,18 +15,9 @@ import { deleteSelectedCard } from '../../../lib/card.service.js';
 
 export const Card = ({ 
     card,
-    setSelectedCardEditModal,
-    setSelectedCardDeleteModal
+    openModal
 }) => {
 
-
-    const handleOpenCardEditModal = (id) => {
-        setSelectedCardEditModal(prev => prev === id ? null : id);
-    };
-    
-    const handleOpenCardDeleteModal = (id) => {
-        setSelectedCardDeleteModal(prev => prev === id ? null : id);
-    };
 
     const [isCopied, setIsCopied] = useState(null);
 
@@ -55,7 +46,9 @@ export const Card = ({
             </Link>
 
             <div className='flex items-center gap-[0.5rem] opacity-0 group-hover:opacity-100 transition-all duration-100 px-2'>
-                <button title='Edit' onClick={()=>handleOpenCardEditModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                <button title='Edit' 
+                onClick={()=>openModal('edit-link', card)} 
+                className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                         <Edit className="w-[23px] h-[23px]" />
                 </button>
 
@@ -69,7 +62,7 @@ export const Card = ({
                     </button>
                 )}
 
-                <button title='Delete' onClick={() => handleOpenCardDeleteModal(card.id)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
+                <button title='Delete' onClick={() => openModal('delete-link', card)} className='cursor-pointer opacity-25 hover:opacity-100 active:opacity-25 transition-all duration-100'>
                     <Delete className="w-[25px] h-[25px]" />
                 </button>
             </div>

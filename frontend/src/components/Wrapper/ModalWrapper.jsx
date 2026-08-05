@@ -5,6 +5,7 @@ import { AddLinkModal } from "../HomeComponent/Modal/AddLinkModal"
 import { CardEditModal } from "../HomeComponent/Modal/CardEditModal"
 import { GroupCreateModal } from "../HomeComponent/Modal/GroupCreateModal"
 import { GroupEditModal } from "../HomeComponent/Modal/GroupEditModal"
+import { ManageGroupModal } from "../HomeComponent/Modal/ManageGroupModal"
 
 // warning components
 import { DeleteCardWarning } from "../HomeComponent/Modal/DeleteCardWarning"
@@ -15,23 +16,10 @@ import { Modal } from "./Modal"
 
 export const ModalWrapper = ({
     user,
-    groupIdSelected,
-    groupNameSelected,
-    cardIdEdit,
-    cardTitleEdit,
-    cardIdDelete,
-    cardTitleDelete,
-
-    createGroupModalOpen,
-    setCreateGroupModalOpen,
-
-    createLinkModalOpen,
-    setCreateLinkModalOpen,
-    selectedCardEditModal,
-    setSelectedCardEditModal,
-    selectedCardDeleteModal,
-    setSelectedCardDeleteModal,
-
+    group,
+    modal,
+    closeModal,
+    
     setToastMessage,
     setEditToastMessage,
     setDeleteToastMessage
@@ -40,47 +28,53 @@ export const ModalWrapper = ({
 
     return (
         <>
-            {createGroupModalOpen && (
+            {modal.type === 'create-group' && (
                 <Modal>
                     <GroupCreateModal 
                         userId={user?.id}
-                        closeModal={()=>setCreateGroupModalOpen(false)}
+                        closeModal={()=>closeModal()}
                         setToastMessage={setToastMessage}
                     />
                 </Modal> 
             )}
 
-            {createLinkModalOpen && (
+            {modal.type === 'create-link' && (
                 <Modal>
                     <AddLinkModal 
                         userId={user?.id}
-                        closeModal={()=>setCreateLinkModalOpen(false)}
-                        groupName={groupNameSelected}
-                        groupId={groupIdSelected}
+                        closeModal={()=>closeModal()}
+                        groupName={modal?.payload}
+                        groupId={group.id}
                         setToastMessage={setToastMessage}
                     />
                 </Modal>
             )}
 
-            {selectedCardEditModal && (
+            {modal.type === 'edit-link' && (
                 <Modal>
                     <CardEditModal 
-                        cardId={cardIdEdit}
-                        cardTitle={cardTitleEdit}
-                        closeModal={()=>setSelectedCardEditModal(null)}
+                        card={modal.payload}
+                        closeModal={()=>closeModal()}
                         setEditToastMessage={setEditToastMessage}
                     />
                 </Modal>
             )}
 
-            {selectedCardDeleteModal && (
+            {modal.type === 'delete-link' && (
                 <Modal>
                     <DeleteCardWarning 
                         userId={user?.id}
-                        cardId={cardIdDelete}
-                        cardTitle={cardTitleDelete}
-                        closeModal={()=>setSelectedCardDeleteModal(null)}
+                        card={modal.payload}
+                        closeModal={()=>closeModal()}
                         setDeleteToastMessage={setDeleteToastMessage}
+                    />
+                </Modal>
+            )}
+
+            {modal.type === 'manage-group' && (
+                <Modal>
+                    <ManageGroupModal 
+                        closeModal={()=>closeModal()}
                     />
                 </Modal>
             )}

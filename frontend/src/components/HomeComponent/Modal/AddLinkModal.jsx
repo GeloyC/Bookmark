@@ -43,7 +43,6 @@ export const AddLinkModal = ({
     const [newTitle, setNewTitle] = useState('');
 
 
-    const selectGroup = (value) => { setGroupName(value) };
     const queryClient = useQueryClient();
 
     const handleCreateNewLink = useMutation({
@@ -70,8 +69,6 @@ export const AddLinkModal = ({
             queryClient.invalidateQueries({
                 queryKey: ['cards']
             });
-
-
         }, 
         onError: (err) => {
             setErrorExistedMessage(err.response?.data.message)

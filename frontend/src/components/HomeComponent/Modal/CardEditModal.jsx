@@ -7,15 +7,13 @@ import { updateLinkTitle } from "../../../lib/card.service.js";
 
 
 export const CardEditModal = ({
-    cardId,
-    cardTitle,
+    card,
     closeModal,
     setEditToastMessage
 }) => {
 
-    const [originalTitle, setOriginalTitle] = useState(cardTitle);
+    const [originalTitle, setOriginalTitle] = useState(card.title);
     const [newTitle, setNewTitle] = useState('');
-
     const [error, setError] = useState('');
 
     const queryClient = useQueryClient();
@@ -40,7 +38,7 @@ export const CardEditModal = ({
             queryClient.invalidateQueries({
                 queryKey: ['cards']
             });
-            setSelectedCardEditModal(null);
+            closeModal();
             setEditToastMessage('Link title updated successfully!');
             setTimeout(()=>setEditToastMessage(null), 3000);
         }
@@ -50,10 +48,7 @@ export const CardEditModal = ({
     return (
         <div className="modal-in flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to rename the title '{cardTitle?.split('').splice(0,40)}...' ?</span>
-                {/* <button onClick={closeModal} className="flex items-center justify-center cursor-pointer rounded-full hover:bg-[#252525] active:bg-[#191919] p-1">
-                    <Close className="w-[20px] h-[20px]" />
-                </button> */}
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to rename the title '{card.title?.split('').splice(0,40)}...' ?</span>
             </div>
 
             <span className="text-[#FAFAFA] opacity-75">
@@ -61,7 +56,7 @@ export const CardEditModal = ({
             </span>
 
             <input type="text" 
-                defaultValue={cardTitle} onBlur={(e)=>setNewTitle(e.target.value)}
+                defaultValue={card.title} onBlur={(e)=>setNewTitle(e.target.value)}
                 className="w-full bg-[#252525] border border-[#252525] p-3 text-[#FAFAFA] rounded-[10px]
                 focus:outline-none focus:border-[#8cd56a]"
             />
@@ -71,7 +66,7 @@ export const CardEditModal = ({
             <div className="flex items-center w-full gap-1">
                 <button onClick={()=>{
                     handleRenameLinkTitle.mutate({
-                        id: cardId,
+                        id: card.id,
                         title: newTitle
                     })
                 }} className="bg-[#8cd56a]/75 py-3 hover:bg-[#8cd56a] active:bg-[#8cd56a]/75 w-full rounded-[10px] cursor-pointer">

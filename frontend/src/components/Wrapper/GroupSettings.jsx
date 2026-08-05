@@ -10,8 +10,7 @@ import { CreateGroupButton } from '../HomeComponent/Button/CreateGroupButton';
 
 
 export const GroupSettings = ({
-    setCreateGroupModalOpen,
-    setManageGroupModalOpen
+    openModal
 }) => {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -26,14 +25,14 @@ export const GroupSettings = ({
                 <div className="fade-in absolute top-10 right-0 flex flex-col gap-2 p-2 w-auto bg-[#141414] rounded-[10px] border border-[#FAFAFA]/10">
                     <CreateGroupButton 
                         onClick={()=> {
-                            setCreateGroupModalOpen(true);
+                            openModal('create-group');
                             setIsOpen(false);
                         }}
                     />
 
                     <ManageGroupButton 
                         onClick={()=> {
-                            setManageGroupModalOpen(true);
+                            openModal('manage-group');
                             setIsOpen(false);
                         }}
                     />
