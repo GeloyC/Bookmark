@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
 // icons
@@ -8,18 +8,19 @@ import Close from '/src/assets/Icons/close.svg?react';
 import Edit from '/src/assets/Icons/edit.svg?react';
 import Add from '/src/assets/Icons/add.svg?react';
 
-
 // components
 import { GroupCreateModal } from '../components/HomeComponent/Modal/GroupCreateModal';
-import { GroupWrapper } from '../components/Wrapper/GroupWrapper';
 import { LinkWrapper } from '../components/Wrapper/LinkWrapper';
-import { AddLinkModal } from '../components/HomeComponent/Modal/AddLinkModal';
 import { Card } from '../components/HomeComponent/Cards/Card';
 import { NoCard } from '../components/HomeComponent/Cards/NoCard';
 import { TopBar } from '../components/Wrapper/TopBar';
-import { GroupSelectection } from '../components/Wrapper/GroupSelection';
 import { CreateLinkButton } from '../components/HomeComponent/Button/CreateLinkButton';
-
+import { Toast } from '../components/Toast/Toast';
+import { DeleteToast } from '../components/Toast/DeleteToast';
+import { EditToast } from '../components/Toast/EditToast';
+import { ModalWrapper } from '../components/Wrapper/ModalWrapper';
+import { Onboarding } from '../components/Wrapper/OnBoarding';
+import { SideBar } from '../components/SideBar/SideBar';
 
 
 // context
@@ -29,110 +30,100 @@ import { useUserContext } from '../context/userContext';
 import { getGroupsById } from '../lib/group.service';
 import { getLinksPerGroup } from '../lib/card.service';
 
-// components
-import { GroupEditModal } from '../components/HomeComponent/Modal/GroupEditModal';
-import { CardEditModal } from '../components/HomeComponent/Modal/CardEditModal';
-import { DeleteGroupWarning } from '../components/HomeComponent/Modal/DeleteGroupWarning';
-import { DeleteCardWarning } from '../components/HomeComponent/Modal/DeleteCardWarning';
-import { Toast } from '../components/Toast/Toast';
-import { DeleteToast } from '../components/Toast/DeleteToast';
-import { EditToast } from '../components/Toast/EditToast';
-import { GroupSettings } from '../components/Wrapper/GroupSettings';
-import { ModalWrapper } from '../components/Wrapper/ModalWrapper';
 
 
 const Home = () => {
 
     const user = useUserContext();
 
-
-    const [createGroupModalOpen, setCreateGroupModalOpen] = useState(false);
-    const [createLinkModalOpen, setCreateLinkModalOpen] = useState(false);
-    const [manageGroupModalOpen, setManageGroupModalOpen] = useState(false);
-
     const [modal, setModal] = useState({
         type: null,
         payload: null
     });
-
-    const [chosenGroup, setChosenGroup] = useState(null);
-    const [selectedGroupId, setSelectedGroupId] = useState(null);
-
-    const [selectedCardEditModal, setSelectedCardEditModal] = useState(null);
-    const [selectedCardDeleteModal, setSelectedCardDeleteModal] = useState(null)
-
-    const [toastMessage, setToastMessage] = useState(null);
-    const [deleteToastMessage, setDeleteToastMessage] = useState(null);
-    const [editToastMessage, setEditToastMessage] = useState(null);
+    
+    const openModal = (type, payload = null) => {setModal({ type, payload })}
+    const closeModal = () => {setModal({ type: null, payload: null })}
+    
+    const { groupId } = useParams();
 
 
-    const { data: groups = [], error, isLoading: isGroupsLoading, isError } = useQuery({
+    const { 
+        data: groups = [], 
+        error, isLoading: 
+        isGroupsLoading, 
+        isError 
+    } = useQuery({
         queryKey: ['groups', user.id],
         queryFn: () => getGroupsById(user.id)
     })
 
-    const groupSelected = groups.find(group => group.id === chosenGroup);
+    const groupSelected = groups.find(group => group.id === groupId);
 
-    const { data: cards = [], isLoading:isCardsLoading } = useQuery({
-        queryKey: ['cards', groupSelected?.id],
-        queryFn: () => getLinksPerGroup(groupSelected?.id),
-        enabled: !!groupSelected?.id
+    const { 
+        data: cards = [], 
+        isLoading: isCardsLoading 
+    } = useQuery({
+        queryKey: ['cards', groupId],
+        queryFn: () => getLinksPerGroup(groupId),
+        enabled: !!groupId
     });
 
     
-    const selectedCardToEdit = cards.find(card => card.id === selectedCardEditModal);
-    const selectedCardToDelete = cards.find(card => card.id === selectedCardDeleteModal);
+    const [toastMessage, setToastMessage] = useState(null);
+    const [deleteToastMessage, setDeleteToastMessage] = useState(null);
+    const [editToastMessage, setEditToastMessage] = useState(null);
 
-
-    const openModal = (type, payload = null) => {setModal({ type, payload })}
-    const closeModal = () => {setModal({ type: null, payload: null })}
-
+    const createLinkCondition = groupId && cards.length > 0;
+    const showLinksCondition = groupId && cards.length >= 1;
 
     return (
         <>
-            <div className="flex flex-col items-center justify-start h-screen w-full gap-[1rem] px-[12rem]">
+            <div className="grid grid-cols-[15%_85%] h-screen w-full">
 
-                {groups.length > 0 && (
-                    <TopBar>
-                        <GroupSelectection 
-                            setChosenGroup={setChosenGroup}
+                <SideBar 
+                    user={user}
+                    groups={groups}
+                    openModal={openModal}
+                    selectedGroupId={groupId}
+                    groupSelected={groupSelected}
+                />
+                        
+                {groups.length > 0 ? (
+                    <LinkWrapper 
+                        cards={cards}
+                        groupName={groupSelected?.name}
+                        isCardsLoading={isCardsLoading}
+                    >
+                        <TopBar 
                             groupSelected={groupSelected}
-                            groups={groups}
+                            openModal={()=> openModal('create-link', groupSelected?.name)}
+                            createLinkCondition={groupId && cards.length > 0}
                         />
 
-                        <div className='flex items-center gap-2'>
-                            <GroupSettings openModal={openModal} />
-
-                            {chosenGroup && (
-                                <CreateLinkButton 
-                                    openModal={()=>openModal('create-link')}
+                        <div className='flex flex-col w-full max-h-[650px] overflow-y-auto thin-scrollbar gap-[0.3rem] py-[1rem]'>
+                            {groupId && cards.length >= 1 ? (
+                                cards.map(card => (
+                                    <Card key={card.id}
+                                        card={card}
+                                        openModal={openModal}
+                                    />
+                                ))
+                            ):(
+                                <NoCard 
+                                    selectedGroup={groupSelected}
+                                    openModal={()=> openModal('create-link', groupSelected?.name)}
                                 />
                             )}
                         </div>
-                    </TopBar>
+                    </LinkWrapper>
+                ):(
+                    <Onboarding 
+                        user={user}
+                        openModal={openModal}
+                    /> 
                 )}
-            
+                
 
-                <LinkWrapper 
-                    cards={cards}
-                    groupName={groupSelected?.name}
-                    isCardsLoading={isCardsLoading}
-                >
-                    {chosenGroup && cards.length >= 1 ? (
-                        cards.map(card => (
-                            <Card key={card.id}
-                                card={card}
-                                setSelectedCardDeleteModal={setSelectedCardDeleteModal}
-                                openModal={openModal}
-                            />
-                        ))
-                    ):(
-                        <NoCard 
-                            selectedGroup={groupSelected}
-                            openModal={()=> openModal('create-link')}
-                        />
-                    )}
-                </LinkWrapper>
             </div>
 
             <ModalWrapper

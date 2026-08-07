@@ -17,40 +17,40 @@ function App() {
   const [createAccountModalOpen, setCreateAccountModalOpen] = useState(false);
 
   return (
-      <div className="relative flex flex-col w-full h-screen overflow-y-auto thin-scrollbar">
-        <Navigation 
-          setLoginModalOpen={setLoginModalOpen}
-          setCreateAccountModalOpen={setCreateAccountModalOpen}
-          user={user}
-        />
+    <div className="relative flex flex-col w-full h-screen overflow-y-auto thin-scrollbar">
 
-        {user ? (
-          <Home />
-        ): (
+      {user ? (
+        <Home />
+      ): (
+        <>
+          <Navigation 
+            setLoginModalOpen={setLoginModalOpen}
+            setCreateAccountModalOpen={setCreateAccountModalOpen}
+          />
           <GuestHhome 
             setCreateAccountModalOpen={setCreateAccountModalOpen}
           />
-        )}
+        </>
+      )}
 
-        {loginModalOpen && (
-          <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-              <LoginModal
-                  setCloseModal={setLoginModalOpen}
-                  setCreateAccountModalOpen={setCreateAccountModalOpen}
-              />
-          </div>
-        )}
+      {loginModalOpen && (
+        <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+            <LoginModal
+                setCloseModal={setLoginModalOpen}
+                setCreateAccountModalOpen={setCreateAccountModalOpen}
+            />
+        </div>
+      )}
 
-        {createAccountModalOpen && (
-          <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
-              <CreateAccountModal
-                  setCloseModal={setCreateAccountModalOpen}
-                  setLoginModalOpen={setLoginModalOpen}
-              />
-          </div>
-        )}
-
-      </div>
+      {createAccountModalOpen && (
+        <div className='fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex w-full h-full items-center justify-center bg-[#141414]/50 backdrop-blur'>
+            <CreateAccountModal
+                setCloseModal={setCreateAccountModalOpen}
+                setLoginModalOpen={setLoginModalOpen}
+            />
+        </div>
+      )}
+    </div>
   )
 }
 

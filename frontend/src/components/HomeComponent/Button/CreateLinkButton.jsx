@@ -6,9 +6,9 @@ export const CreateLinkButton = ({
 }) => {
 
     return (
-        <button onClick={openModal} className='flex items-center bg-[#71cb47] hover:bg-[#71cb47]/80 active:bg-[#71cb47]/25 p-2 rounded-[10px] cursor-pointer'>
-            <Add className="size-5 opacity-90" />
-            <span className='px-2 text-[#1414141] text-[16px] font-[500] opacity-90'>Add a link</span>
+        <button onClick={openModal} className='flex items-center bg-[#71cb47]/30 hover:bg-[#71cb47]/50 active:bg-[#71cb47]/30 px-3 h-full rounded-[5px] cursor-pointer gap-1'>
+            <Add className="size-4" />
+            <span className='pr-1 text-[#FAFAFA] text-[14px] font-[500] opacity-90'>Add Link</span>
         </button>
     )
 }

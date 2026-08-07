@@ -52,7 +52,7 @@ export const GroupCreateModal = ({
                 )}
 
                 <div className='flex items-center gap-1 w-full'>
-                    <button onClick={() => createGroupMutation.mutate()} disabled={createGroupMutation.isPending} className='w-full py-[0.5rem] rounded-[10px] bg-[#8cd56a] hover:bg-[#A8DF8E] active:bg-[#8cd56a] cursor-pointer'>
+                    <button  onClick={() => createGroupMutation.mutate()} disabled={createGroupMutation.isPending || !groupName} className={`w-full py-[0.5rem] rounded-[10px] bg-[#71cb47]/75 ${createGroupMutation.isPending || !groupName ? 'opacity-50 cursor-not-allowed' : 'opacity-100 hover:bg-[#71cb47] active:bg-[#71cb47]/50 cursor-pointer'}`}>
                         <span className='text-center text-[16px] text-[#191919] font-bold'>{createGroupMutation.isPending ? 'Creating...' : 'Create'}</span>
                     </button>
                     <button onClick={closeModal} className='w-full py-[0.5rem] rounded-[10px] bg-[#191919] hover:bg-[#252525] active:bg-[#191919] cursor-pointer'>

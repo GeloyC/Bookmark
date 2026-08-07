@@ -48,7 +48,7 @@ export const CardEditModal = ({
     return (
         <div className="modal-in flex flex-col items-start w-[600px] h-auto bg-[#191919] p-[2rem] pb-[2.5rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[1rem]">
             <div className="flex items-center justify-between w-full">
-                <span className="text-[#FAFAFA] text-[24px] font-bold">Do you want to rename the title '{card.title?.split('').splice(0,40)}...' ?</span>
+                <span className="text-[#FAFAFA] text-[24px] font-bold">Rename '{card.title?.split('').splice(0,40)}...' ?</span>
             </div>
 
             <span className="text-[#FAFAFA] opacity-75">
@@ -69,8 +69,8 @@ export const CardEditModal = ({
                         id: card.id,
                         title: newTitle
                     })
-                }} className="bg-[#8cd56a]/75 py-3 hover:bg-[#8cd56a] active:bg-[#8cd56a]/75 w-full rounded-[10px] cursor-pointer">
-                    <span className="text-[#141414]">Save</span>
+                }} disabled={handleRenameLinkTitle.isPening} className="bg-[#8cd56a]/75 py-3 hover:bg-[#8cd56a] active:bg-[#8cd56a]/75 w-full rounded-[10px] cursor-pointer">
+                    <span className="text-[#141414]">{handleRenameLinkTitle.isPening ? 'Saving...' : 'Save'}</span>
                 </button>
 
                 <button onClick={closeModal} className="bg-[#252525]/75 py-3 hover:bg-[#252525] active:bg-[#252525]/75 w-full rounded-[10px] cursor-pointer">

@@ -24,6 +24,7 @@ createRoot(document.getElementById('root')).render(
         <Routes>
           <Route element={ <App /> }> 
             <Route index element={<Home />} />
+            <Route path=":groupId" element={<Home />} />
           </Route>
         </Routes>
       </UserContext>

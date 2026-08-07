@@ -1,7 +1,7 @@
 import db from "../config/db.js";
 import { getFromCheerio } from "../service/scrapers/cheerio.js";
 import { getFromPlaywright } from "../service/scrapers/playwright.js";
-
+import { validateUrl } from "../service/validateUrl.js";
 
 export const createLink = async (req, res, next) => {
     try {
@@ -10,6 +10,21 @@ export const createLink = async (req, res, next) => {
             group_id,
             link
         } = req.body;
+
+        if (!link || link==="") {
+            return res.status(400).json({
+                success: false,
+                message: 'Please enter a valid link'
+            });
+        }
+
+        const validateLink = validateUrl(link);
+        if (!validateLink) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid link'
+            });
+        }
 
         const checkLink = await db.oneOrNone(
             `SELECT * FROM cards 
@@ -34,8 +49,14 @@ export const createLink = async (req, res, next) => {
                 throw new Error("Cheerio returned an empty title.");
             }
         } catch (err) {
-            console.log("Cheerio failed. Falling back to Playwright...");
-            title = await getFromPlaywright(link);
+            try {
+                title = await getFromPlaywright(link);
+            } catch (err) {
+                return res.status(400).json({
+                    success: false,
+                    message: 'Unable to save url, try again and check the url for correction'
+                });
+            }
         }
         
         const newCard = await db.one(

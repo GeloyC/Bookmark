@@ -48,7 +48,7 @@ export const LoginModal = ({
             <div className='flex flex-col gap-[1rem] w-full'>
                 <div className='flex flex-col w-full item-start gap-1'>
                     <span className='text-[#FAFAFA] text-[14px]'>Username</span>
-                    <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} className='p-[0.5rem] text-[#FAFAFA] rounded-[10px] bg-[#252525 ] focus:outline-none border border-[#FAFAFA]/25 focus:border-[#8cd56a]' />
+                    <input  type="text" value={username} onChange={(e)=>setUsername(e.target.value)} className='p-[0.5rem] text-[#FAFAFA] rounded-[10px] bg-[#252525 ] focus:outline-none border border-[#FAFAFA]/25 focus:border-[#8cd56a]' />
                 </div>
 
                 <div className='flex flex-col w-full item-start gap-1'>
@@ -56,7 +56,7 @@ export const LoginModal = ({
                         <span className='text-[#FAFAFA] text-[14px]'>Password</span>
 
                         <div className='flex items-center gap-1'>
-                            <input type="checkbox" name='password_show' id='password_show' className='size-3 cursor-pointer' onChange={()=>setPasswordShow(prev => !prev)}/>
+                            <input tabIndex={1} type="checkbox" name='password_show' id='password_show' className='size-3 cursor-pointer' onChange={()=>setPasswordShow(prev => !prev)}/>
                             <label htmlFor="password_show"
                             className='text-[#FAFAFA] cursor-pointer text-[14px]' 
                             >

@@ -4,11 +4,12 @@ import * as cheerio from 'cheerio';
 export const getFromCheerio = async (link) => {
     const { data }  = await axios.get(link, {
         timeout: 5000,
+        maxRedirects: 5,
         headers: {
             "User-Agent": "Mozilla/5.0"
         }
     });
 
     const $ = cheerio.load(data);
-    return $("title").text().trim();
+    return $("title").text().trim(); 
 }

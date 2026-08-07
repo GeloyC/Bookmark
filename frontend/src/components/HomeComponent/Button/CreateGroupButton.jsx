@@ -1,13 +1,13 @@
-
-import Folder from '/src/assets/Icons/folder.svg?react';
+// icons
+import Add from '/src/assets/Icons/add.svg?react';
 
 export const CreateGroupButton = ({
-    onClick
+    openModal
 }) => {
     return (
-        <button onClick={onClick} className="flex items-center  hover:bg-[#252525]/75 active:bg-[#252525]/25 p-2 rounded-[10px] cursor-pointer">
-            <Folder className="size-5"/>
-            <span className="px-2 font-[500] text-[#FAFAFA] whitespace-nowrap">Create a group</span>
+        <button onClick={openModal} className='flex items-center justify-start w-full px-2 py-2 bg-[#71cb47]/30 hover:bg-[#71cb47]/50 active:bg-[#71cb47]/30 rounded-[5px] cursor-pointer gap-[0.5rem]'>
+            <Add className="size-4" />
+            <span className='text-[#FAFAFA] text-[14px] font-bold'>Add Group</span>
         </button>
     )
 }

@@ -6,6 +6,7 @@ import { CardEditModal } from "../HomeComponent/Modal/CardEditModal"
 import { GroupCreateModal } from "../HomeComponent/Modal/GroupCreateModal"
 import { GroupEditModal } from "../HomeComponent/Modal/GroupEditModal"
 import { ManageGroupModal } from "../HomeComponent/Modal/ManageGroupModal"
+import { LogOutModal } from "../HomeComponent/Modal/LogOutModal"
 
 // warning components
 import { DeleteCardWarning } from "../HomeComponent/Modal/DeleteCardWarning"
@@ -25,6 +26,7 @@ export const ModalWrapper = ({
     setDeleteToastMessage
 }) => {
 
+    console.log('modal: ', modal?.payload);
 
     return (
         <>
@@ -75,6 +77,38 @@ export const ModalWrapper = ({
                 <Modal>
                     <ManageGroupModal 
                         closeModal={()=>closeModal()}
+                    />
+                </Modal>
+            )}
+
+
+            {modal.type === 'rename-group' && (
+                <Modal>
+                    <GroupEditModal 
+                        userId={user?.id}
+                        group={modal?.payload}
+                        closeModal={closeModal}
+                        setEditToastMessage={setEditToastMessage}
+                    />
+                </Modal>
+            )}
+
+
+            {modal.type === 'delete-group' && (
+                <Modal>
+                    <DeleteGroupWarning 
+                        userId={user?.id}
+                        group={modal?.payload}
+                        closeModal={closeModal}
+                        setDeleteToastMessage={setDeleteToastMessage}
+                    />
+                </Modal>
+            )}
+
+            { modal.type === 'logout' && (
+                <Modal>
+                    <LogOutModal
+                        closeModal={closeModal}
                     />
                 </Modal>
             )}

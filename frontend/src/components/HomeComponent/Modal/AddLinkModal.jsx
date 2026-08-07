@@ -65,11 +65,6 @@ export const AddLinkModal = ({
             setNewTitle(returnedTitle);
             setLinkId(returnedLinkId);
         },
-        onSuccess: (response) => {
-            queryClient.invalidateQueries({
-                queryKey: ['cards']
-            });
-        }, 
         onError: (err) => {
             setErrorExistedMessage(err.response?.data.message)
         }

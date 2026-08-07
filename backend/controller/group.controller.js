@@ -7,6 +7,13 @@ export const createGroup = async (req, res, next) => {
             name
         } = req.body;  
 
+        if (name === "" || !name) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please enter a group name'
+            });
+        }
+
         const checkGroup = await db.oneOrNone(
             `SELECT * FROM groups 
             WHERE name = $1`,
@@ -59,8 +66,8 @@ export const allGroups = async (req, res, next) => {
                 ON c.group_id = g.id 
             WHERE 
                 group_holder_id = $1
-            GROUP BY 
-                g.id;`,
+            GROUP BY g.id
+            ORDER BY g.date_created ASC;`,
             [ group_holder_id ]
         );
 
