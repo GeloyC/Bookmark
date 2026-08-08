@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import axios from 'axios';
 
 // icons
-import ArrowDown from '/src/assets/icons/arrow-down.svg?react';
-import Logout from '/src/assets/Icons/Logout.svg?react';
+import ArrowDown from '../assets/icons/arrow-down.svg?react';
+import Logout from '../assets/Icons/Logout.svg?react';
 
 
 // service
