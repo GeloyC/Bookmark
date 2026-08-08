@@ -19,14 +19,8 @@ function App() {
   return (
     <div className="relative flex flex-col w-full h-screen overflow-y-auto thin-scrollbar">
 
-      {!user ? (
-        <>
-          <Navigation 
-              setLoginModalOpen={setLoginModalOpen}
-              setCreateAccountModalOpen={setCreateAccountModalOpen}
-            />
-          <Home />
-        </>
+      {user ? (
+        <Home />
       ): (
         <>
           <Navigation 
