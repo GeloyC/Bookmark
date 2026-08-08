@@ -93,7 +93,7 @@ export const GuestHhome = ({
 
             <footer className="flex items-start justify-between w-full px-[16rem] border border-t-[#FAFAFA]/10 py-[1rem]">
                 <div className="flex items-center w-full gap-[1rem]">
-                    <img src="../assets/logo/link_saver_logo.png" alt="logo" className="size-5"/>
+                    <img src="/logo/link_saver_logo.png" alt="logo" className="size-5"/>
                     <span className="text-[#FAFAFA] text-[14px] opacity-50 leading-tight">
                         This is a personal project created to enrich my knowledge on building application with CRUD features.
                     </span>

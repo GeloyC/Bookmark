@@ -91,7 +91,7 @@ export const CreateAccountModal = ({
         return (
             <div className='modal-in relative flex flex-col items-center justify-center w-[400px] h-auto bg-[#191919] p-[2rem] py-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]'>
 
-                <img src="../assets/logo/link_saver_logo.png" alt="logo" className="size-10 rounded-full border border-[#8cd56a]/50 p-2" />
+                <img src="/logo/link_saver_logo.png" alt="logo" className="size-10 rounded-full border border-[#8cd56a]/50 p-2" />
 
                 <div className='flex flex-col items-center w-full gap-[0.5rem]'>
                     <span className='text-[#71cb47] text-[24px] font-bold leading-none'>Thank you for signing up!</span>
