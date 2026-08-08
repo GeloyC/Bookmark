@@ -3,22 +3,6 @@ import session from 'express-session';
 import pgPromise from 'pg-promise';
 
 import dotenv from 'dotenv';
-
-try {
-    const result = await dns.lookup(process.env.DB_HOST);
-
-    console.log("DATABASE DNS RESOLVED:", result);
-} catch (err) {
-    console.error("DATABASE DNS FAILED:", err);
-}
-
-// temporariy
-import os from 'node:os';
-import dns from 'node:dns/promises';
-
-console.log("HOSTNAME:", os.hostname());
-
-
 dotenv.config();
 
 const pgp = new pgPromise();
