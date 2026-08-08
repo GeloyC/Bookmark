@@ -11,7 +11,7 @@ export const NoCard = ({
 }) => {
 
     return (
-        <div className='fade-in flex flex-col items-center justify-center w-full h-[650px] gap-[1.5rem]'>
+        <div className='fade-in flex flex-col items-center justify-center w-full max-h-[650px] gap-[1.5rem]'>
             <div className='flex flex-col justify-center items-center gap-[1rem]'>
                 <span className='text-[#71cb47] text-[20px] leading-none'>'{selectedGroup?.name}' group is empty</span>
 
