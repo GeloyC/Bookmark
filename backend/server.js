@@ -43,7 +43,7 @@ app.use(
     cors({
         origin: [
             'http://localhost:5173',
-            'https://bookmark-backend-pyr0.onrender.com'
+            'https://bookmark-ubat.onrender.com'
         ],
         credentials: true
     })
