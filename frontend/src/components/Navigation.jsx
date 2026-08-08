@@ -10,6 +10,8 @@ const Navigation = ({
   user
 }) => {
 
+  // debug
+  console.log('Current user: ', user);
 
   const [accountDropdown, setAccountDropdown] = useState(false);
 

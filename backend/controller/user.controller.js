@@ -108,7 +108,7 @@ export const userLogin = async (req, res, next) => {
 
         req.session.user = {
             id: user.id,
-            name: user.username
+            username: user.username
         };
 
         console.log('User: ', req.session.user);
