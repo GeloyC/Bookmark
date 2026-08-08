@@ -91,7 +91,7 @@ export const CreateAccountModal = ({
         return (
             <div className='modal-in relative flex flex-col items-center justify-center w-[400px] h-auto bg-[#191919] p-[2rem] py-[3rem] rounded-[15px] border border-[#FAFAFA]/15 gap-[2rem]'>
 
-                <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className="size-10 rounded-full border border-[#8cd56a]/50 p-2" />
+                <img src="../assets/logo/link_saver_logo.png" alt="logo" className="size-10 rounded-full border border-[#8cd56a]/50 p-2" />
 
                 <div className='flex flex-col items-center w-full gap-[0.5rem]'>
                     <span className='text-[#71cb47] text-[24px] font-bold leading-none'>Thank you for signing up!</span>
@@ -111,7 +111,7 @@ export const CreateAccountModal = ({
                 <Close className="w-[20px] h-[20px]" />
             </button>
             <div className="flex flex-col items-center w-full gap-[1rem]">
-                <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className='w-[40px] h-[40px]'/>
+                <img src="../assets/logo/link_saver_logo.png" alt="logo" className='w-[40px] h-[40px]'/>
                 <span className="text-[22px] text-[#8cd56a] text-center font-bold w-full">CREATE YOUR ACCOUNT</span>
             </div>
 
@@ -141,7 +141,7 @@ export const CreateAccountModal = ({
                     <div className='flex items-center justify-between'>
                         <span className='text-[#FAFAFA] text-[14px] opacity-75'>Password</span>
                         <div className='flex items-center gap-1'>
-                            <input type="checkbox" name="show_password" id="show_password" className='cursor-pointer size-3' onChange={()=>setShowPassword(prev=>!prev)}/>
+                            <input tabIndex={0} type="checkbox" name="show_password" id="show_password" className='cursor-pointer size-3' onChange={()=>setShowPassword(prev=>!prev)}/>
                             <label htmlFor="show_password" className={`cursor-pointer text-[12px] text-[#FAFAFA]`}>Show</label>
                         </div>
                     </div>
