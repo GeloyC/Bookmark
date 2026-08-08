@@ -42,7 +42,8 @@ app.use(express.json());
 app.use(
     cors({
         origin: [
-            'http://localhost:5173'
+            'http://localhost:5173',
+            'https://bookmark-backend-pyr0.onrender.com'
         ],
         credentials: true
     })
@@ -54,7 +55,7 @@ app.use('/card', card);
 app.use('/group', group);
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;;
 
 app.listen(PORT, () => {
     console.log(`Server is running is http://localhost:${PORT}`);
