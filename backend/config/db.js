@@ -3,6 +3,9 @@ import session from 'express-session';
 import pgPromise from 'pg-promise';
 
 import dotenv from 'dotenv';
+import os from 'node:os';
+
+console.log("HOSTNAME:", os.hostname());
 
 
 dotenv.config();
@@ -19,14 +22,6 @@ export const dbConfig = {
 
 console.log('DB config: ', dbConfig);
 
-// export const dbConfig = {
-//     connectionString: process.env.DATABASE_URL,
-//     ssl: process.env.NODE_ENV === 'production'
-//         ? { rejectUnauthorized: false }
-//         : false
-// };
-
-// const db = pgp(process.env.DATABASE_URL)
 const db = pgp(dbConfig);
 
 
