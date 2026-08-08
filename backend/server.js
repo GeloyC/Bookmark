@@ -19,7 +19,13 @@ const app = express();
 
 const PostgreSession = new connectPgSimple(session);
 const sessionStore = new PostgreSession({
-    conObject: dbConfig,
+    conObject: {
+        user: process.env.DB_USERNAME,
+        password: String(process.env.DB_PASSWORD),
+        host: process.env.DB_HOST,
+        port: Number(process.env.DB_PORT),
+        database: process.env.DB_NAME,
+    },
     tableName: 'user_session'
 })
 
@@ -37,6 +43,15 @@ app.use(
         }
     }) 
 );
+
+app.use((req, res, next) => {
+    console.log('Session ID:', req.sessionID);
+    console.log('Cookie:', req.headers.cookie);
+    console.log('Session:', req.session);
+    console.log('Current user:', req.session.user);
+
+    next();
+});
 
 app.use(express.json());
 app.use(
