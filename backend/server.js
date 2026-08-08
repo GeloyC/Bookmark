@@ -58,10 +58,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(
     cors({
-        origin: [
-            'http://localhost:5173',
-            'https://bookmark-ubat.onrender.com'
-        ],
+        origin: 'https://bookmark-ubat.onrender.com',
         credentials: true
     })
 );
