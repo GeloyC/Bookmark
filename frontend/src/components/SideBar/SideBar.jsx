@@ -24,7 +24,7 @@ export const SideBar = ({
 
             <div className='flex flex-col gap-[2rem]'>
                 <div className="flex items-center w-full gap-[0.75rem]">
-                    <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className="size-6"/>
+                    <img src="/logo/link_saver_logo.png" alt="logo" className="size-6"/>
                     <span className="text-[#FAFAFA] text-[18px] font-[500]">
                         {user?.name || user?.username}'s Space
                     </span>
