@@ -9,17 +9,20 @@ dotenv.config();
 
 const pgp = new pgPromise();
 
-// export const dbConfig = {
-//     user: process.env.DB_USERNAME,
-//     password: String(process.env.DB_PASSWORD),
-//     host: process.env.DB_HOST,
-//     port: Number(process.env.DB_PORT),
-//     database: process.env.DB_NAME,
-// };
-
 export const dbConfig = {
-    connectionString: process.env.DATABASE_URL,
+    user: process.env.DB_USERNAME,
+    password: String(process.env.DB_PASSWORD),
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    database: process.env.DB_NAME,
 };
+
+// export const dbConfig = {
+//     connectionString: process.env.DATABASE_URL,
+//     ssl: process.env.NODE_ENV === 'production'
+//         ? { rejectUnauthorized: false }
+//         : false
+// };
 
 // const db = pgp(process.env.DATABASE_URL)
 const db = pgp(dbConfig);
