@@ -111,7 +111,7 @@ export const CreateAccountModal = ({
                 <Close className="w-[20px] h-[20px]" />
             </button>
             <div className="flex flex-col items-center w-full gap-[1rem]">
-                <img src="../assets/logo/link_saver_logo.png" alt="logo" className='w-[40px] h-[40px]'/>
+                <img src="/logo/link_saver_logo.png" alt="logo" className='w-[40px] h-[40px]'/>
                 <span className="text-[22px] text-[#8cd56a] text-center font-bold w-full">CREATE YOUR ACCOUNT</span>
             </div>
 
