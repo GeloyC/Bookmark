@@ -27,6 +27,7 @@ export const logOutUser = async () => {
             { withCredentials: true }
         );
         
+        window.location.href = "/"
         window.location.reload();
         return response.data;
     } catch (err) {

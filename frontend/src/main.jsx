@@ -17,7 +17,6 @@ import { UserContext } from './context/userContext.jsx'
 const user = await getUser();
 const queryClient = new QueryClient();
 
-console.log('Current bookmark user: ', user);
 
 createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
