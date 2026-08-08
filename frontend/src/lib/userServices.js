@@ -12,7 +12,7 @@ export const getUser = async () => {
             }
         );
 
-        return user.data;
+        return user.data ?? [];
     } catch (err) {
         throw err;
     }
