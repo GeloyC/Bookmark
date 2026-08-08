@@ -111,6 +111,18 @@ export const userLogin = async (req, res, next) => {
             username: user.username
         };
 
+        req.session.save((err) => {
+            if (err) {
+                return next(err);
+            }
+
+            return res.status(200).json({
+                success: true,
+                message: 'Login successful!',
+                user: req.session.user
+            });
+        });
+
         console.log('User: ', req.session.user);
 
         return res.status(200).json({
