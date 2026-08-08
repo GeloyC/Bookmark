@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { BASE_URL } from '../../config/api';
 
 // icons
 import Close from '/src/assets/Icons/close.svg?react';
@@ -62,7 +63,7 @@ export const CreateAccountModal = ({
             console.log('Payload: ', payload);
 
             const response = await axios.post(
-                `http://localhost:5000/user/v1/signup`, 
+                `${BASE_URL}/user/v1/signup`, 
                 payload, 
                 { withCredentials: true }
             );

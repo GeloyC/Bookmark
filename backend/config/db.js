@@ -17,6 +17,8 @@ export const dbConfig = {
     database: process.env.DB_NAME,
 };
 
+console.log('DB config: ', dbConfig);
+
 // export const dbConfig = {
 //     connectionString: process.env.DATABASE_URL,
 //     ssl: process.env.NODE_ENV === 'production'
