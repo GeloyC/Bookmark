@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 
-// icons
-import ArrowDown from '../assets/icons/arrow-down.svg?react';
 
 
 const Navigation = ({
@@ -18,9 +16,6 @@ const Navigation = ({
   return (
     <div className={`sticky top-0 flex items-center justify-between w-full min-h-[60px] box-border z-30 p-[1rem]`}>
         <Link to="/" className='flex items-center gap-[0.5rem]'>
-            {/* LOGO HERE */}
-            {/* <span className='text-[#8cd56a] text-[32px] font-bold whitespace-nowrap'>LINK SAVER</span>
-             */}
             <img src="/src/assets/logo/link_saver_logo.png" alt="logo" className='size-7'/>
         </Link>
 
