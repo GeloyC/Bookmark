@@ -3,7 +3,6 @@ import axios from 'axios';
 
 // icons
 import Close from '/src/assets/Icons/close.svg?react';
-import Logo from '/src/assets/logo/link_saver_logo.png'
 
 
 export const CreateAccountModal = ({
