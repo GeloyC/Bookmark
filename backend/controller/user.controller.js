@@ -111,6 +111,8 @@ export const userLogin = async (req, res, next) => {
             name: user.username
         };
 
+        console.log('User: ', req.session.user);
+
         return res.status(200).json({
             success: true,
             message: 'Login sucessfull!',
