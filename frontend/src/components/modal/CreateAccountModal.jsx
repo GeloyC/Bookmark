@@ -46,7 +46,7 @@ export const CreateAccountModal = ({
             setAccountCreated(false);
             setCloseModal(false);
 
-            // window.location.reload();
+            window.location.reload();
         }
     }, [count]);
 
@@ -75,7 +75,7 @@ export const CreateAccountModal = ({
             setUsername('');
             setPassword('');
             
-            // timerCount();
+            timerCount();
             return response.data;
 
         } catch (err) {

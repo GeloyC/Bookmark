@@ -26,7 +26,7 @@ export const LoginModal = ({
             );
 
             console.log(response.data);
-            // window.location.reload();
+            window.location.reload();
             
             return response.data;
         } catch (err) {
